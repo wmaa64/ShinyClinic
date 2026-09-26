@@ -1,0 +1,367 @@
+/* =========================================
+   DAILY PULSE CONTROL
+========================================= */
+
+.daily-pulse-page {
+  padding: 25px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.daily-pulse-header {
+  margin-bottom: 20px;
+}
+
+.daily-pulse-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.daily-pulse-card {
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.daily-pulse-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.daily-pulse-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.daily-pulse-field label {
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.daily-pulse-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.daily-pulse-field input:focus {
+  border-color: #007bff;
+}
+
+.daily-pulse-field input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   READ ONLY FIELDS
+========================================= */
+
+.daily-pulse-field input.daily-pulse-readonly {
+  background: #f5f5f5;
+  color: #555;
+  cursor: default;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.daily-pulse-status-row {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.pulse-status {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pulse-status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.pulse-status.balanced {
+  background: #d4edda;
+  color: #155724;
+}
+
+.pulse-status.difference {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.daily-pulse-actions {
+  margin-top: 20px;
+}
+
+.daily-pulse-save-button {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.daily-pulse-save-button:hover {
+  background: #0056b3;
+}
+
+.daily-pulse-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   CALCULATION SECTION
+========================================= */
+
+.daily-pulse-info {
+  margin-top: 25px;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.daily-pulse-info h2 {
+  margin: 0 0 20px 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #333;
+}
+
+.daily-pulse-calculation {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+}
+
+.daily-pulse-calculation > div {
+  padding: 15px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.daily-pulse-calculation span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #777;
+}
+
+.daily-pulse-calculation strong {
+  display: block;
+  font-size: 20px;
+  color: #333;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.daily-pulse-loading {
+  padding: 40px;
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+}
+
+/* =========================================
+   DAILY PULSE DETAILS
+========================================= */
+
+.daily-pulse-details {
+  margin-top: 25px;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.daily-pulse-details h2 {
+  margin: 0 0 20px 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.daily-pulse-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.daily-pulse-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.daily-pulse-table th {
+  padding: 12px 10px;
+  background: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.daily-pulse-table td {
+  padding: 11px 10px;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 14px;
+  color: #444;
+}
+
+.daily-pulse-table tbody tr:hover {
+  background: #fafafa;
+}
+
+
+/* =========================================
+   PULSE COLUMN
+========================================= */
+
+.daily-pulse-table .pulse-value {
+  font-weight: 600;
+  text-align: center;
+}
+
+
+/* =========================================
+   TABLE FOOTER
+========================================= */
+
+.daily-pulse-table tfoot td {
+  padding: 13px 10px;
+  background: #f5f5f5;
+  border-top: 2px solid #ddd;
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.daily-pulse-table .pulse-total-label {
+  text-align: right;
+  color: #444;
+}
+
+.daily-pulse-table .pulse-total-value {
+  text-align: center;
+  font-size: 16px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.daily-pulse-empty {
+  padding: 30px 20px;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  text-align: center;
+  color: #777;
+  background: #fafafa;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+  .daily-pulse-form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .daily-pulse-calculation {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .daily-pulse-page {
+    padding: 15px;
+  }
+
+  .daily-pulse-card {
+    padding: 18px;
+  }
+
+  .daily-pulse-form {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-pulse-calculation {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-pulse-info {
+    padding: 18px;
+  }
+
+    .daily-pulse-details {
+    padding: 18px;
+  }
+
+  .daily-pulse-table {
+    min-width: 600px;
+  }
+
+}

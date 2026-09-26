@@ -1,0 +1,447 @@
+/* =========================================================
+   DOCTOR PULSES PAGE
+   ========================================================= */
+
+.doctor-pulses-page {
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.doctor-pulses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.doctor-pulses-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+.doctor-pulses-header p {
+  margin: 6px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.doctor-pulses-filter-card {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  padding: 20px;
+
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  margin-bottom: 24px;
+}
+
+.doctor-pulses-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 190px;
+}
+
+.doctor-pulses-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.doctor-pulses-field select,
+.doctor-pulses-field input {
+  height: 40px;
+
+  padding: 0 12px;
+
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+
+  background: #fff;
+
+  font-size: 14px;
+  color: #333;
+
+  box-sizing: border-box;
+
+  outline: none;
+}
+
+.doctor-pulses-field select:focus,
+.doctor-pulses-field input:focus {
+  border-color: #4a90e2;
+}
+
+.doctor-pulses-filter-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+.doctor-pulses-search-button {
+  height: 40px;
+
+  padding: 0 22px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #2563eb;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.doctor-pulses-search-button:hover {
+  background: #1d4ed8;
+}
+
+.doctor-pulses-search-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.doctor-pulses-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.doctor-pulses-summary-card {
+  background: #fff;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+
+  padding: 18px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04);
+
+  min-height: 90px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.doctor-pulses-summary-card span {
+  font-size: 13px;
+  color: #777;
+
+  margin-bottom: 8px;
+}
+
+.doctor-pulses-summary-card strong {
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #222;
+}
+
+.doctor-pulses-total-card {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.doctor-pulses-total-card strong {
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   DETAILS SECTION
+   ========================================================= */
+
+.doctor-pulses-section {
+  background: #fff;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04);
+
+  overflow: hidden;
+}
+
+.doctor-pulses-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.doctor-pulses-section-header h2 {
+  margin: 0;
+
+  font-size: 19px;
+  font-weight: 700;
+
+  color: #222;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.doctor-pulses-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.doctor-pulses-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  min-width: 750px;
+}
+
+.doctor-pulses-table th {
+  padding: 13px 14px;
+
+  background: #f8fafc;
+
+  border-bottom: 1px solid #ddd;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #444;
+
+  white-space: nowrap;
+}
+
+.doctor-pulses-table td {
+  padding: 13px 14px;
+
+  border-bottom: 1px solid #eee;
+
+  font-size: 14px;
+
+  color: #333;
+
+  white-space: nowrap;
+}
+
+.doctor-pulses-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.doctor-pulses-number {
+  text-align: right;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+   ========================================================= */
+
+.doctor-pulses-table tfoot td {
+  padding: 15px 14px;
+
+  background: #f8fafc;
+
+  border-top: 2px solid #ddd;
+
+  font-weight: 700;
+}
+
+.doctor-pulses-footer-label {
+  text-align: right;
+
+  color: #333;
+}
+
+.doctor-pulses-footer-total {
+  text-align: right;
+
+  font-size: 16px;
+
+  color: #222;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.doctor-pulses-loading {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+.doctor-pulses-empty {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .doctor-pulses-summary {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .doctor-pulses-page {
+    padding: 16px;
+  }
+
+  .doctor-pulses-header h1 {
+    font-size: 23px;
+  }
+
+  .doctor-pulses-filter-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .doctor-pulses-field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .doctor-pulses-filter-actions {
+    width: 100%;
+  }
+
+  .doctor-pulses-search-button {
+    width: 100%;
+  }
+
+  .doctor-pulses-summary {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media print {
+
+  .doctor-pulses-page {
+    padding: 0;
+  }
+
+  .doctor-pulses-filter-card {
+    display: none;
+  }
+
+  .doctor-pulses-header {
+    margin-bottom: 20px;
+  }
+
+  .doctor-pulses-header h1 {
+    font-size: 24px;
+  }
+
+  .doctor-pulses-section {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  .doctor-pulses-summary {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .doctor-pulses-summary-card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .doctor-pulses-table {
+    min-width: 0;
+  }
+
+  .doctor-pulses-table th,
+  .doctor-pulses-table td {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .doctor-pulses-table tbody tr:hover {
+    background: transparent;
+  }
+
+  .doctor-pulses-section-header {
+    padding: 12px;
+  }
+
+  .doctor-pulses-table thead {
+    display: table-header-group;
+  }
+
+  .doctor-pulses-table tr {
+    break-inside: avoid;
+  }
+
+}

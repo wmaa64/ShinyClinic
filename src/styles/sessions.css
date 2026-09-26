@@ -1,0 +1,1325 @@
+/* =====================================================
+   SESSIONS PAGE
+===================================================== */
+
+.sessions-page {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.sessions-header {
+  margin-bottom: 24px;
+}
+
+.sessions-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.sessions-header p {
+  margin: 6px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.sessions-section {
+  width: 100%;
+  margin-bottom: 20px;
+
+  padding: 20px;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.sessions-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.sessions-section-header h2 {
+  margin: 0;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.sessions-section-header span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.sessions-error {
+  margin-bottom: 18px;
+
+  padding: 12px 15px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.sessions-loading {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.sessions-empty {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   PATIENT SELECTION
+===================================================== */
+
+.sessions-patient-selection {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.sessions-form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.sessions-form-group label {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #374151;
+}
+
+.sessions-form-group select {
+  width: 100%;
+
+  padding: 11px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  outline: none;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.sessions-form-group select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* =====================================================
+   APPOINTMENTS LIST
+===================================================== */
+
+.sessions-appointments-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(280px, 1fr)
+    );
+
+  gap: 10px;
+}
+
+
+/* =====================================================
+   PATIENT CARD
+===================================================== */
+
+.session-patient-card {
+  display: grid;
+
+  grid-template-columns:
+    65px 1fr;
+
+  grid-template-rows:
+    auto auto auto;
+
+  column-gap: 12px;
+  row-gap: 4px;
+
+  width: 100%;
+
+  padding: 13px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 8px;
+
+  background: white;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.session-patient-card:hover {
+  border-color: #93c5fd;
+
+  background: #f8fbff;
+
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.08);
+
+  transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   SELECTED PATIENT CARD
+===================================================== */
+
+.session-patient-card-selected {
+  border-color: #2563eb;
+
+  background: #eff6ff;
+
+  box-shadow:
+    0 0 0 1px #2563eb;
+}
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+.session-patient-time {
+  grid-row: 1 / 4;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 55px;
+
+  border-radius: 7px;
+
+  background: #f3f4f6;
+
+  color: #374151;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   PATIENT INFO
+===================================================== */
+
+.session-patient-info {
+  min-width: 0;
+}
+
+.session-patient-name {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #111827;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.session-patient-file {
+  margin-top: 2px;
+
+  color: #6b7280;
+
+  font-size: 11px;
+}
+
+/* =====================================================
+   SAVE / UPDATE SESSION BUTTON
+===================================================== */
+
+.sessions-save-button {
+  margin-top: 10px;
+  padding: 12px 24px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #007bff;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.sessions-save-button:hover {
+  background: #0056b3;
+}
+
+.sessions-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =====================================================
+   SERVICE
+===================================================== */
+
+.session-patient-service {
+  grid-column: 2;
+
+  color: #2563eb;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  direction: rtl;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   DOCTOR
+===================================================== */
+
+.session-patient-doctor {
+  grid-column: 2;
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   SELECTED PATIENT
+===================================================== */
+
+.selected-patient-card {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 12px;
+
+  padding: 16px;
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 8px;
+
+  background: #eff6ff;
+}
+
+
+.selected-patient-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.selected-patient-item span {
+  color: #6b7280;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+.selected-patient-item strong {
+  color: #111827;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   NEXT STEP
+===================================================== */
+
+.session-next-step {
+  margin-top: 18px;
+
+  padding: 15px;
+
+  border: 1px dashed #d1d5db;
+
+  border-radius: 8px;
+
+  background: #fafafa;
+
+  text-align: center;
+}
+
+.session-next-step p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+/* =====================================================
+   SESSION SERVICES
+===================================================== */
+
+.sessions-services-toolbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 18px;
+}
+
+.sessions-add-services-button {
+  border: none;
+  border-radius: 7px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.sessions-add-services-button:hover {
+  background: #1d4ed8;
+}
+
+.sessions-add-services-button:active {
+  transform: translateY(1px);
+}
+
+.sessions-add-services-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   SERVICES TABLE
+===================================================== */
+
+.sessions-services-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.sessions-services-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  background: #ffffff;
+}
+
+.sessions-services-table thead {
+  background: #f8fafc;
+}
+
+.sessions-services-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.sessions-services-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #334155;
+}
+
+.sessions-services-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sessions-services-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =====================================================
+   SERVICE NAME
+===================================================== */
+
+.sessions-services-table td:first-child {
+  min-width: 220px;
+}
+
+.sessions-services-table td:first-child strong {
+  display: block;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sessions-consumable-label {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+/* =====================================================
+   TABLE INPUTS
+===================================================== */
+
+.sessions-services-table input {
+  width: 90px;
+  height: 36px;
+  padding: 6px 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.sessions-services-table input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.sessions-services-table input[readonly] {
+  background: #f8fafc;
+  color: #475569;
+  cursor: default;
+}
+
+
+/* =====================================================
+   REMOVE BUTTON
+===================================================== */
+
+.sessions-remove-service-button {
+  border: 1px solid #fecaca;
+  border-radius: 5px;
+  padding: 7px 11px;
+  background: #fff;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.sessions-remove-service-button:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.sessions-remove-service-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   SAVE SERVICES
+===================================================== */
+
+.sessions-services-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.sessions-save-services-button {
+  border: none;
+  border-radius: 7px;
+  padding: 10px 22px;
+  background: #16a34a;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.sessions-save-services-button:hover {
+  background: #15803d;
+}
+
+.sessions-save-services-button:active {
+  transform: translateY(1px);
+}
+
+.sessions-save-services-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   ADD SERVICES MODAL
+===================================================== */
+
+.sessions-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.55);
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.sessions-services-modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 85vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+  border-radius: 10px;
+
+  box-shadow:
+    0 20px 45px rgba(15, 23, 42, 0.2);
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   MODAL HEADER
+===================================================== */
+
+.sessions-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sessions-modal-header h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 650;
+  color: #1e293b;
+}
+
+.sessions-modal-close {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 6px;
+
+  background: transparent;
+  color: #64748b;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.sessions-modal-close:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.sessions-modal-search {
+  padding: 12px 20px 0;
+}
+
+.sessions-modal-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #1e293b;
+  font: inherit;
+}
+
+.sessions-modal-search input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #3b82f6;
+}
+
+
+/* =====================================================
+   MODAL BODY
+===================================================== */
+
+.sessions-modal-body {
+  padding: 10px 20px 18px;
+
+  overflow-y: auto;
+  flex: 1;
+}
+
+
+/* =====================================================
+   SERVICE OPTION
+===================================================== */
+
+.sessions-service-option {
+  /*min-height: 54px;*/
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 9px 10px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+.sessions-service-option:last-child {
+  border-bottom: none;
+}
+
+.sessions-service-option:hover {
+  background: #f8fafc;
+}
+
+
+/* =====================================================
+   CHECKBOX
+===================================================== */
+
+.sessions-service-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+
+  margin: 0;
+
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   SERVICE NAME IN MODAL
+===================================================== */
+
+.sessions-service-option-name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #1e293b;
+}
+
+.sessions-service-option-category {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+/* =====================================================
+   SERVICE PRICE IN MODAL
+===================================================== */
+
+.sessions-service-option-price {
+  min-width: 80px;
+
+  text-align: right;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #334155;
+}
+
+
+/* =====================================================
+   ALREADY ADDED SERVICE
+===================================================== */
+
+.sessions-service-option.already-added {
+  background: #f8fafc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.sessions-service-option.already-added:hover {
+  background: #f8fafc;
+}
+
+.sessions-service-option.already-added input {
+  cursor: not-allowed;
+}
+
+.sessions-service-option-status {
+  min-width: 95px;
+
+  text-align: right;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #64748b;
+}
+
+
+/* =====================================================
+   MODAL FOOTER
+===================================================== */
+
+.sessions-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  padding: 15px 20px;
+
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+
+/* =====================================================
+   MODAL CANCEL
+===================================================== */
+
+.sessions-modal-cancel {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+
+  padding: 9px 17px;
+
+  background: #ffffff;
+  color: #475569;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.sessions-modal-cancel:hover {
+  background: #f1f5f9;
+}
+
+
+/* =====================================================
+   MODAL ADD SELECTIONS
+===================================================== */
+
+.sessions-modal-add {
+  border: none;
+  border-radius: 6px;
+
+  padding: 9px 18px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.sessions-modal-add:hover {
+  background: #1d4ed8;
+}
+
+.sessions-modal-add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   LOADING / EMPTY
+===================================================== */
+
+.sessions-loading,
+.sessions-empty {
+  padding: 25px 15px;
+
+  text-align: center;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =====================================================
+   QTY / DISCOUNT NUMBER CONTROL
+===================================================== */
+
+.sessions-number-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+
+  height: 36px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+
+/* -----------------------------------------------------
+   PLUS / MINUS BUTTON
+----------------------------------------------------- */
+
+.sessions-number-control button {
+  width: 32px;
+  height: 34px;
+
+  border: none;
+
+  background: #f8fafc;
+  color: #334155;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sessions-number-control button:hover {
+  background: #e2e8f0;
+}
+
+.sessions-number-control button:active {
+  background: #cbd5e1;
+}
+
+.sessions-number-control button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+
+/* -----------------------------------------------------
+   VALUE
+----------------------------------------------------- */
+
+.sessions-number-control span {
+  min-width: 42px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+
+  background: #ffffff;
+
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   SESSION SERVICES SUMMARY
+===================================================== */
+
+.sessions-services-summary {
+  width: 100%;
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  gap: 0;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   SUMMARY ITEM
+===================================================== */
+
+.sessions-summary-item {
+  min-width: 190px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 14px 20px;
+
+  border-left: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
+}
+
+.sessions-summary-item:first-child {
+  border-left: none;
+}
+
+
+/* =====================================================
+   SUMMARY LABEL
+===================================================== */
+
+.sessions-summary-label {
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #64748b;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   SUMMARY VALUE
+===================================================== */
+
+.sessions-summary-value {
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #1e293b;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   NET DUE
+===================================================== */
+
+.sessions-summary-net {
+  min-width: 210px;
+
+  background: #f8fafc;
+}
+
+.sessions-summary-net .sessions-summary-label {
+  color: #475569;
+}
+
+.sessions-summary-net .sessions-summary-value {
+  font-size: 21px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .sessions-services-modal {
+    max-height: 90vh;
+  }
+
+  .sessions-modal-header {
+    padding: 15px;
+  }
+
+  .sessions-modal-body {
+    padding: 8px 15px 15px;
+  }
+
+  .sessions-modal-footer {
+    padding: 12px 15px;
+  }
+
+  .sessions-service-option {
+    gap: 9px;
+  }
+
+  .sessions-service-option-status {
+    display: none;
+  }
+
+  .sessions-services-footer {
+    justify-content: stretch;
+  }
+
+  .sessions-save-services-button {
+    width: 100%;
+  }
+
+  .sessions-services-summary {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sessions-summary-item {
+    width: 100%;
+    min-width: 0;
+
+    border-left: none;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .sessions-summary-item:first-child {
+    border-top: none;
+  }
+
+  .sessions-summary-net {
+    min-width: 0;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .sessions-page {
+    padding: 18px;
+  }
+
+  .selected-patient-card {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .sessions-page {
+    padding: 12px;
+  }
+
+  .sessions-header h1 {
+    font-size: 23px;
+  }
+
+  .sessions-section {
+    padding: 15px;
+  }
+
+  .sessions-section-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .sessions-appointments-list {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-patient-card {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 450px) {
+
+  .sessions-page {
+    padding: 8px;
+  }
+
+  .sessions-section {
+    padding: 12px;
+  }
+
+  .selected-patient-card {
+    grid-template-columns: 1fr;
+  }
+
+}
