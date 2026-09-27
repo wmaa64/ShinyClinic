@@ -93,35 +93,6 @@ const NavBar = () => {
             roleIDs: [1,2,3],
         },
 
-
-        // -------------------------------------------------
-        // SESSIONS
-        // -------------------------------------------------
-
-        {
-            type: "link",
-            name: "sessions",
-            href: "/sessions",
-            labelEn: "Sessions",
-            labelAr: "الجلسات",
-            roleIDs: [1,2],
-        },
-
-
-        // -------------------------------------------------
-        // ACCOUNTS
-        // -------------------------------------------------
-
-        {
-            type: "link",
-            name: "accounts",
-            href: "/sessionDue",
-            labelEn: "Accounts",
-            labelAr: "الحسابات",
-            roleIDs: [1,3],
-        },
-
-
         // -------------------------------------------------
         // APPOINTMENTS
         // -------------------------------------------------
@@ -132,6 +103,32 @@ const NavBar = () => {
             href: "/appointments",
             labelEn: "Appointments",
             labelAr: "الحجوزات",
+            roleIDs: [1,3],
+        },
+
+        // -------------------------------------------------
+        // SESSIONS For RECEPTIONISTS
+        // -------------------------------------------------
+
+        {
+            type: "link",
+            name: "sessions",
+            href: "/receptionSessions",
+            labelEn: "Sessions",
+            labelAr: "الجلسات",
+            roleIDs: [1,3],
+        },
+
+        // -------------------------------------------------
+        // PAYMENTS
+        // -------------------------------------------------
+
+        {
+            type: "link",
+            name: "payments",
+            href: "/sessionDue",
+            labelEn: "Payments",
+            labelAr: "المدفوعات",
             roleIDs: [1,3],
         },
 
@@ -149,6 +146,20 @@ const NavBar = () => {
         },
 
         // -------------------------------------------------
+        // SESSIONS for DOCTORS
+        // -------------------------------------------------
+
+        {
+            type: "link",
+            name: "sessions",
+            href: "/sessions",
+            labelEn: "Doctor Sessions",
+            labelAr: "الجلسات للطبيب",
+            roleIDs: [1,2],
+        },
+
+
+        // -------------------------------------------------
         // QUERIES
         // -------------------------------------------------
 
@@ -161,16 +172,17 @@ const NavBar = () => {
 
             children: [
                 {
-                    href: "/revenue",
-                    labelEn: "Revenue",
-                    labelAr: "الإيرادات",
-                    roleIDs: [1,9],
-                },
-                {
                     href: "/doctorPulses",
                     labelEn: "Doctor Pulses",
                     labelAr: "نبضات الأطباء",
                     roleIDs: [1,3,9],
+                },
+
+                {
+                    href: "/revenue",
+                    labelEn: "Revenue",
+                    labelAr: "الإيرادات",
+                    roleIDs: [1,9],
                 },
 
             ]
