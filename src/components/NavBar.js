@@ -76,7 +76,7 @@ const NavBar = () => {
             href: "/dashboard",
             labelEn: "DashBoard",
             labelAr: "لوحة المعلومات",
-            roleIDs: [1,2,3],
+            roleIDs: [1,2,3,9],
         },
 
 
@@ -157,20 +157,20 @@ const NavBar = () => {
             name: "queries",
             labelEn: "Queries",
             labelAr: "الاستعلامات",
-            roleIDs: [1,2,3],
+            roleIDs: [1,2,3,9],
 
             children: [
                 {
                     href: "/revenue",
                     labelEn: "Revenue",
                     labelAr: "الإيرادات",
-                    roleIDs: [1,2,3],
+                    roleIDs: [1,9],
                 },
                 {
                     href: "/doctorPulses",
                     labelEn: "Doctor Pulses",
                     labelAr: "نبضات الأطباء",
-                    roleIDs: [1,2,3],
+                    roleIDs: [1,3,9],
                 },
 
             ]

@@ -372,6 +372,9 @@ const handleAddSelectedServices = () => {
       CategoryID:   service.CategoryID,
       CategoryName:  service.CategoryName,
 
+      // ORIGINAL SERVICE DEFAULT PRICE
+      DefaultPrice: Number(service.DefaultPrice || 0),
+
       // CURRENT DEFAULT PRICE
       UnitPrice:  Number(service.DefaultPrice || 0 ),
       Qty: 1,
@@ -518,6 +521,33 @@ const handleQtyChange = (rowId, value) => {
     })
   );
 };
+
+// UPDATE SERVICE UNIT PRICE
+const handleUnitPriceChange = (rowId, value) => {
+
+  let unitPrice = Number(value);
+
+  if (isNaN(unitPrice) || unitPrice < 0) { unitPrice = 0; }
+
+  setSessionServices(previous =>
+    previous.map(service => {
+
+      if (service._rowId !== rowId) {
+        return service;
+      }
+
+      const qty =  Number(service.Qty || 1);
+
+      const discount =   Number(service.Discount || 0);
+
+      const lineTotal =   Math.max( 0,  (qty * unitPrice) - discount  );
+
+      return { ...service,  UnitPrice: unitPrice,  LineTotal: lineTotal,   };
+
+    })
+  );
+};
+
 
 // UPDATE SERVICE PULSES
 const handlePulsesNoChange = (rowId, value) => {
@@ -773,7 +803,8 @@ const filteredServices = services.filter(service =>
                       {formatTime( appointment.AppointmentTime)} {" - "}
                                   {appointment.PatientName} {" - "}
                                   {appointment.FileNo} {" - "}
-                                  {appointment.AppointmentService}
+                                  {appointment.AppointmentService} {" - Dr."}
+                                  {appointment.DoctorName}
                     </option>
                   )
                 )}
@@ -1130,10 +1161,7 @@ const filteredServices = services.filter(service =>
               service => (
 
                 <tr
-                  key={
-                    service._rowId ||
-                    service.SessionServiceID
-                  }
+                  key={service._rowId ||  service.SessionServiceID  }
                 >
 
                   {/* SERVICE */}
@@ -1195,14 +1223,18 @@ const filteredServices = services.filter(service =>
 
                     <input
                       type="number"
+                      min="0"
+                      step="1"
+                      value={service.UnitPrice ?? 0}
 
-                      value={
-                        Number(
-                          service.UnitPrice || 0
-                        )
+                      onChange={(e) =>
+                        handleUnitPriceChange( service._rowId, e.target.value ) }
+
+                      readOnly={
+                        Number(service.DefaultPrice || 0) > 0
                       }
 
-                      readOnly
+                      disabled={savingServices}
                     />
 
                   </td>
