@@ -1,0 +1,110 @@
+.doctor-revenue-page {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 24px;
+  color: #263247;
+}
+
+.doctor-revenue-header { margin-bottom: 22px; }
+.doctor-revenue-header h1 { margin: 0; font-size: 27px; font-weight: 700; }
+.doctor-revenue-header p { margin: 7px 0 0; color: #718096; font-size: 14px; }
+
+.doctor-revenue-filters {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+
+.doctor-revenue-field { display: flex; flex: 1 1 190px; flex-direction: column; gap: 7px; }
+.doctor-revenue-field span { color: #475569; font-size: 13px; font-weight: 600; }
+.doctor-revenue-field input,
+.doctor-revenue-field select {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #263247;
+  font: inherit;
+  outline: none;
+}
+.doctor-revenue-field input:focus,
+.doctor-revenue-field select:focus { border-color: #2563eb; }
+.doctor-revenue-search {
+  height: 40px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.doctor-revenue-search:hover { background: #1d4ed8; }
+.doctor-revenue-search:disabled { cursor: wait; opacity: .65; }
+
+.doctor-revenue-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 22px;
+}
+.doctor-revenue-card {
+  display: flex;
+  min-height: 88px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 9px;
+  padding: 17px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+.doctor-revenue-card span { color: #718096; font-size: 13px; }
+.doctor-revenue-card strong { color: #263247; font-size: 21px; }
+.doctor-revenue-grand-total { border-color: #bfdbfe; background: #eff6ff; }
+.doctor-revenue-grand-total strong { color: #1d4ed8; font-size: 23px; }
+
+.doctor-revenue-section {
+  margin-top: 20px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+.doctor-revenue-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 19px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.doctor-revenue-section-heading h2 { margin: 0; font-size: 18px; }
+.doctor-revenue-section-heading strong { color: #1d4ed8; white-space: nowrap; }
+.doctor-revenue-note { margin: 13px 19px 0; color: #64748b; font-size: 13px; }
+.doctor-revenue-table-wrap { width: 100%; overflow-x: auto; }
+.doctor-revenue-table { width: 100%; min-width: 900px; border-collapse: collapse; }
+.doctor-revenue-table th,
+.doctor-revenue-table td { padding: 11px 12px; border-bottom: 1px solid #e8edf3; text-align: start; white-space: nowrap; }
+.doctor-revenue-table th { background: #f8fafc; color: #475569; font-size: 12px; font-weight: 700; }
+.doctor-revenue-table td { color: #334155; font-size: 13px; }
+.doctor-revenue-table tbody tr:hover { background: #f8fafc; }
+.doctor-revenue-empty { padding: 28px 18px; color: #718096; text-align: center; }
+
+@media (max-width: 760px) {
+  .doctor-revenue-page { padding: 15px; }
+  .doctor-revenue-summary { grid-template-columns: 1fr; }
+  .doctor-revenue-search { flex: 1 1 100%; }
+  .doctor-revenue-section-heading { align-items: flex-start; flex-direction: column; }
+}

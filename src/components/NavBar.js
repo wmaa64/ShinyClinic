@@ -180,6 +180,13 @@ const NavBar = () => {
                     roleIDs: [1,9],
                 },
 
+                {
+                    href: "/doctorRevenue",
+                    labelEn: "Doctor Revenue",
+                    labelAr: "إيرادات الطبيب",
+                    roleIDs: [1,9],
+                },
+
             ]
         },
 
