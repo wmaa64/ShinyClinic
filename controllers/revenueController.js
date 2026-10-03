@@ -11,92 +11,78 @@ export const getRevenue = async (fromDate, toDate) => {
 
   const pool = await connectDB();
 
-  const result = await pool
-    .request()
+  // Sum all session service charges and payments for sessions in the period.
+  const sessionRequest = pool.request()
     .input("FromDate", sql.Date, fromDate)
-    .input("ToDate", sql.Date, toDate)
-    .query(`
+    .input("ToDate", sql.Date, toDate);
+
+  // Sum subscription prices and their recorded payments for subscriptions in the period.
+  const offerRequest = pool.request()
+    .input("FromDate", sql.Date, fromDate)
+    .input("ToDate", sql.Date, toDate);
+
+  const [sessionResult, offerResult] = await Promise.all([
+    sessionRequest.query(`
       SELECT
-        U.FullName AS DoctorName,
-
-        P.FileNo,
-
-        P.FullName AS PatientName,
-
-        LS.SessionID,
-
-        CAST(LS.SessionDate AS DATE) AS SessionDate,
-
-        ISNULL(S.ServicesNet, 0) AS ServicesNet,
-
-        ISNULL(S.ConsumablesTotal, 0) AS ConsumablesTotal,
-
-        ISNULL(PM.TotalPaid, 0) AS TotalPaid,
-
-        ISNULL(S.ServicesNet, 0)
-          - ISNULL(PM.TotalPaid, 0) AS Remaining
-
-      FROM LaserSessions LS
-
-      INNER JOIN Users U
-        ON LS.UserID = U.UserID
-
-      INNER JOIN Patients P
-        ON LS.PatientID = P.PatientID
-
-      LEFT JOIN
+        ISNULL(SUM(SessionTotals.TotalDue), 0) AS TotalDue,
+        ISNULL(SUM(SessionTotals.TotalPaid), 0) AS TotalPaid,
+        ISNULL(SUM(SessionTotals.TotalDue - SessionTotals.TotalPaid), 0) AS Remaining
+      FROM
       (
         SELECT
-          SS.SessionID,
+          LS.SessionID,
+          ISNULL(ServiceTotals.TotalDue, 0) AS TotalDue,
+          ISNULL(PaymentTotals.TotalPaid, 0) AS TotalPaid
+        FROM dbo.LaserSessions LS
+        LEFT JOIN
+        (
+          SELECT
+            SessionID,
+            SUM(LineTotal) AS TotalDue
+          FROM dbo.SessionServices
+          GROUP BY SessionID
+        ) ServiceTotals
+          ON LS.SessionID = ServiceTotals.SessionID
+        LEFT JOIN
+        (
+          SELECT
+            SessionID,
+            SUM(AmountPaid) AS TotalPaid
+          FROM dbo.SessionPayments
+          GROUP BY SessionID
+        ) PaymentTotals
+          ON LS.SessionID = PaymentTotals.SessionID
+        WHERE CAST(LS.SessionDate AS DATE)
+          BETWEEN @FromDate AND @ToDate
+      ) SessionTotals
+    `),
 
-          SUM(
-            CASE
-              WHEN SV.CategoryID <> 10
-              THEN SS.LineTotal
-              ELSE 0
-            END
-          ) AS ServicesNet,
-
-          SUM(
-            CASE
-              WHEN SV.CategoryID = 10
-              THEN SS.LineTotal
-              ELSE 0
-            END
-          ) AS ConsumablesTotal
-
-        FROM SessionServices SS
-
-        INNER JOIN Services SV
-          ON SS.ServiceID = SV.ServiceID
-
-        GROUP BY SS.SessionID
-
-      ) S
-        ON LS.SessionID = S.SessionID
-
-      LEFT JOIN
+    offerRequest.query(`
+      SELECT
+        ISNULL(SUM(OfferTotals.TotalDue), 0) AS TotalDue,
+        ISNULL(SUM(OfferTotals.TotalPaid), 0) AS TotalPaid,
+        ISNULL(SUM(OfferTotals.TotalDue - OfferTotals.TotalPaid), 0) AS Remaining
+      FROM
       (
         SELECT
-          SessionID,
-          SUM(AmountPaid) AS TotalPaid
+          OS.OfferSubscriptionID,
+          OS.ForPrice AS TotalDue,
+          ISNULL(PaymentTotals.TotalPaid, 0) AS TotalPaid
+        FROM dbo.OfferSubscriptions OS
+        OUTER APPLY
+        (
+          SELECT SUM(OSP.AmountPaid) AS TotalPaid
+          FROM dbo.OfferSubscriptionPayments OSP
+          WHERE OSP.OfferSubscriptionID = OS.OfferSubscriptionID
+        ) PaymentTotals
+        WHERE CAST(OS.SubscriptionDate AS DATE)
+          BETWEEN @FromDate AND @ToDate
+      ) OfferTotals
+    `),
+  ]);
 
-        FROM SessionPayments
-
-        GROUP BY SessionID
-
-      ) PM
-        ON LS.SessionID = PM.SessionID
-
-      WHERE
-        CAST(LS.SessionDate AS DATE)
-        BETWEEN @FromDate AND @ToDate
-
-      ORDER BY
-        U.FullName,
-        LS.SessionDate,
-        LS.SessionID
-    `);
-
-  return result.recordset;
+  return {
+    sessions: sessionResult.recordset[0],
+    offers: offerResult.recordset[0],
+  };
 };

@@ -525,6 +525,288 @@
   cursor: not-allowed;
 }
 
+/* =====================================================
+   OFFER USAGE
+===================================================== */
+
+.sessions-offers-section {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.sessions-offers-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.sessions-offers-heading h3 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 17px;
+}
+
+.sessions-offers-heading p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.sessions-offer-success {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #bbf7d0;
+  border-radius: 7px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 13px;
+}
+
+.sessions-offer-usage-list {
+  margin-top: 18px;
+}
+
+.sessions-offer-usage-list h4 {
+  margin: 0 0 10px;
+  color: #334155;
+  font-size: 14px;
+}
+
+.sessions-offer-usage-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-bottom: 0;
+  background: #fff;
+}
+
+.sessions-offer-usage-entry:first-of-type {
+  border-radius: 8px 8px 0 0;
+}
+
+.sessions-offer-usage-entry:last-child {
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 0 0 8px 8px;
+}
+
+.sessions-offer-usage-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.sessions-offer-usage-details strong {
+  color: #1e293b;
+}
+
+.sessions-offer-usage-row-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 7px;
+}
+
+.sessions-offer-edit-button,
+.sessions-offer-delete-button {
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sessions-offer-edit-button {
+  background: #2563eb;
+}
+
+.sessions-offer-delete-button {
+  background: #dc2626;
+}
+
+.sessions-offer-edit-button:disabled,
+.sessions-offer-delete-button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.sessions-offer-usage-edit-form {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px 12px;
+}
+
+.sessions-offer-usage-edit-form > strong {
+  color: #1e293b;
+}
+
+.sessions-offer-usage-edit-form label {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sessions-offer-usage-edit-form input {
+  width: 130px;
+  min-width: 0;
+  min-height: 34px;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+}
+
+.sessions-offer-usage-edit-form input:nth-of-type(2) {
+  flex: 1;
+}
+
+.sessions-offer-usage-edit-form .sessions-offer-usage-row-actions {
+  margin-left: auto;
+}
+
+.sessions-offers-modal-notice {
+  margin: 12px 20px 0;
+  padding: 9px 11px;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 12px;
+}
+
+.sessions-selected-offer {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(260px, 1.5fr);
+  gap: 18px;
+  padding: 16px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.sessions-offer-error {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.sessions-offers-modal > .sessions-offer-error {
+  margin: 12px 20px 0;
+}
+
+.sessions-selected-offer-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.sessions-selected-offer-summary strong {
+  color: #1e3a8a;
+  font-size: 15px;
+}
+
+.sessions-offer-usage-form {
+  display: grid;
+  grid-template-columns: minmax(130px, auto) minmax(120px, 1fr);
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.sessions-offer-usage-form label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sessions-offer-usage-form input {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.sessions-offer-usage-form p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.sessions-offer-usage-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.sessions-offers-modal {
+  max-width: 900px;
+}
+
+.sessions-offers-modal .sessions-modal-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.sessions-offers-modal-body {
+  flex: 1;
+  min-height: 120px;
+  overflow-y: auto;
+}
+
+.sessions-offers-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sessions-offers-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.sessions-offers-table th,
+.sessions-offers-table td {
+  padding: 11px 13px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+  text-align: left;
+  font-size: 13px;
+}
+
+.sessions-offers-table th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 650;
+}
+
+.sessions-offers-table td strong {
+  color: #1e293b;
+}
+
+.sessions-offers-table tr:last-child td {
+  border-bottom: 0;
+}
+
 
 /* =====================================================
    SERVICES TABLE
@@ -1322,4 +1604,66 @@
     grid-template-columns: 1fr;
   }
 
+}
+
+@media (max-width: 700px) {
+  .sessions-offers-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sessions-offers-heading .sessions-add-services-button {
+    width: 100%;
+  }
+
+  .sessions-selected-offer {
+    grid-template-columns: 1fr;
+  }
+
+  .sessions-offer-usage-form {
+    grid-template-columns: 1fr;
+  }
+
+  .sessions-offer-usage-form p,
+  .sessions-offer-usage-actions {
+    grid-column: auto;
+  }
+
+  .sessions-offer-usage-actions {
+    flex-direction: column-reverse;
+  }
+
+  .sessions-offer-usage-actions button {
+    width: 100%;
+  }
+
+  .sessions-offer-usage-entry {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sessions-offer-usage-row-actions {
+    justify-content: flex-end;
+  }
+
+  .sessions-offer-usage-edit-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sessions-offer-usage-edit-form .sessions-offer-usage-row-actions {
+    flex-direction: column-reverse;
+    margin-left: 0;
+  }
+
+  .sessions-offer-usage-edit-form input,
+  .sessions-offer-usage-edit-form .sessions-offer-usage-row-actions button {
+    width: 100%;
+  }
+
+  .sessions-offers-table th,
+  .sessions-offers-table td {
+    padding: 9px;
+    font-size: 12px;
+  }
 }

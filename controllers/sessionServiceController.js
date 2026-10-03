@@ -56,7 +56,6 @@ const getSessionServices = async (sessionId, patientId) => {
         sc.CategoryName,
 
         ss.Qty,
-        ss.PulsesNo,
         ss.UnitPrice,
         ss.LineTotal,
         ss.Discount,
@@ -260,10 +259,6 @@ const saveSessionServices = async (
       const unitPrice =
         Number(service.UnitPrice);
 
-      const pulsesNo =  service.PulsesNo === undefined ||  service.PulsesNo === null ||  service.PulsesNo === ""
-                        ? null
-                        : Number(service.PulsesNo);
-
       const discount =
         service.Discount === undefined ||
         service.Discount === null ||
@@ -303,22 +298,6 @@ const saveSessionServices = async (
       ) {
         throw new Error(
           "Quantity must be greater than zero"
-        );
-      }
-
-      // -------------------------------------------------
-      // VALIDATE PULSES NUMBER
-      // -------------------------------------------------
-
-      if (
-        pulsesNo !== null &&
-        (
-          !Number.isInteger(pulsesNo) ||
-          pulsesNo < 0
-        )
-      ) {
-        throw new Error(
-          "PulsesNo must be a valid whole number"
         );
       }
 
@@ -399,12 +378,6 @@ const saveSessionServices = async (
         )
 
         .input(
-          "PulsesNo",
-          sql.Int,
-          pulsesNo
-        )
-
-        .input(
           "UnitPrice",
           sql.Decimal(18, 2),
           unitPrice
@@ -435,7 +408,6 @@ const saveSessionServices = async (
             PatientID,
             ServiceID,
             Qty,
-            PulsesNo,
             UnitPrice,
             LineTotal,
             Discount,
@@ -449,7 +421,6 @@ const saveSessionServices = async (
             @PatientID,
             @ServiceID,
             @Qty,
-            @PulsesNo,
             @UnitPrice,
             @LineTotal,
             @Discount,

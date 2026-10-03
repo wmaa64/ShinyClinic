@@ -66,6 +66,19 @@ const ReceptionSessionsPage  = () => {
 
   const [showServicesModal, setShowServicesModal] =  useState(false);
 
+  // Offer subscriptions available to this patient for the current session.
+  const [patientOfferSubscriptions, setPatientOfferSubscriptions] = useState([]);
+  const [sessionOfferUsages, setSessionOfferUsages] = useState([]);
+  const [selectedOfferSubscription, setSelectedOfferSubscription] = useState(null);
+  const [showOffersModal, setShowOffersModal] = useState(false);
+  const [offersLoading, setOffersLoading] = useState(false);
+  const [savingOfferUsage, setSavingOfferUsage] = useState(false);
+  const [offerPulsesNo, setOfferPulsesNo] = useState("");
+  const [offerUsageMessage, setOfferUsageMessage] = useState("");
+  const [offerError, setOfferError] = useState("");
+  const [editingOfferUsageID, setEditingOfferUsageID] = useState(null);
+  const [offerUsageEditForm, setOfferUsageEditForm] = useState({ PulsesNo: "", Notes: "" });
+
   // is Doctor logged in Case
   const [IsDoctorCase, setIsDoctorCase] =useState(true);
 
@@ -265,6 +278,49 @@ const ReceptionSessionsPage  = () => {
 
   };
 
+  // Load every offer usage row attached to the current session.
+  const loadSessionOfferUsages = async (sessionID) => {
+    if (!sessionID) {
+      setSessionOfferUsages([]);
+      return [];
+    }
+
+    const response = await fetch(`/api/sessionOfferUsage?sessionID=${sessionID}`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to load session offer usage.");
+    }
+
+    const usages = Array.isArray(data) ? data : [];
+    setSessionOfferUsages(usages);
+    return usages;
+  };
+
+  // Load current active subscriptions for the patient, excluding empty balances.
+  const loadPatientActiveOffers = async (patientID) => {
+    if (!patientID) {
+      setPatientOfferSubscriptions([]);
+      return [];
+    }
+
+    const response = await fetch(
+      `/api/offerSubscriptions?patientID=${patientID}&activeOnly=true`
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to load active offers.");
+    }
+
+    const availableOffers = Array.isArray(data)
+      ? data.filter((subscription) => Number(subscription.RemainingQuantity || 0) > 0)
+      : [];
+
+    setPatientOfferSubscriptions(availableOffers);
+    return availableOffers;
+  };
+
 
 // SELECT APPOINTMENT// =====================================================
 const handleSelectAppointment = async (appointmentID) => {
@@ -277,6 +333,14 @@ const handleSelectAppointment = async (appointmentID) => {
   // CLEAR PREVIOUS DATA
   setCreatedSession(null);
   setSessionServices([]);
+  setPatientOfferSubscriptions([]);
+  setSessionOfferUsages([]);
+  setSelectedOfferSubscription(null);
+  setShowOffersModal(false);
+  setOfferPulsesNo("");
+  setOfferUsageMessage("");
+  setOfferError("");
+  setEditingOfferUsageID(null);
   setError("");
 
   if (!appointment) {
@@ -310,6 +374,7 @@ const handleSelectAppointment = async (appointmentID) => {
     // NO SESSION TODAY
     if (!data) {
       setCreatedSession(null);
+      setSessionOfferUsages([]);
       setIsDoctorCase(true);
       return;
     }
@@ -326,6 +391,9 @@ const handleSelectAppointment = async (appointmentID) => {
     // LOAD EXISTING SERVICES
     await loadSessionServices(data.SessionID, appointment.PatientID);
 
+    // LOAD OFFER USAGE ALREADY RECORDED FOR THIS SESSION.
+    await loadSessionOfferUsages(data.SessionID);
+
   }
   catch (error) {
     console.error("Check today's session error:", error);
@@ -335,6 +403,217 @@ const handleSelectAppointment = async (appointmentID) => {
     setLoading(false);
   }
 
+};
+
+// LOAD ACTIVE OFFER SUBSCRIPTIONS FOR THE SELECTED PATIENT
+const handleOpenOffersModal = async () => {
+
+  if (!createdSession?.SessionID || !selectedAppointment?.PatientID) {
+    setError(isRTL ? "سجل الجلسة أولاً قبل إضافة عرض." : "Register the session before adding an offer.");
+    return;
+  }
+
+  setShowOffersModal(true);
+  setOffersLoading(true);
+  setSelectedOfferSubscription(null);
+  setOfferPulsesNo("");
+  setOfferUsageMessage("");
+  setError("");
+
+  try {
+    await loadPatientActiveOffers(selectedAppointment.PatientID);
+  } catch (loadError) {
+    setOfferError(loadError.message || "Failed to load active offers.");
+    setPatientOfferSubscriptions([]);
+  } finally {
+    setOffersLoading(false);
+  }
+};
+
+// SELECT ONE OFFER FROM THE PATIENT'S AVAILABLE SUBSCRIPTIONS.
+const handleSelectOfferSubscription = (subscription) => {
+  setSelectedOfferSubscription(subscription);
+  setOfferPulsesNo("");
+  setShowOffersModal(false);
+  setOfferUsageMessage("");
+  setOfferError("");
+};
+
+// SAVE HOW MUCH OF THE SELECTED OFFER WAS USED IN THIS SESSION.
+const handleSaveOfferUsage = async () => {
+
+  if (!selectedOfferSubscription || !createdSession?.SessionID || !selectedAppointment?.PatientID) {
+    return;
+  }
+
+  const isPulseOffer = Number(selectedOfferSubscription.CategoryID) === 2;
+  const enteredPulses = offerPulsesNo.trim() === "" ? 0 : Number(offerPulsesNo);
+
+  if (isPulseOffer && (!Number.isFinite(enteredPulses) || enteredPulses <= 0)) {
+    setOfferError(isRTL ? "أدخل عدد نبضات أكبر من صفر." : "Enter a pulse quantity greater than zero.");
+    return;
+  }
+
+  if (!Number.isFinite(enteredPulses) || enteredPulses < 0) {
+    setOfferError(isRTL ? "أدخل عدد نبضات صالحاً." : "Enter a valid pulse quantity.");
+    return;
+  }
+
+  try {
+    setSavingOfferUsage(true);
+    setOfferError("");
+    setOfferUsageMessage("");
+
+    const response = await fetch(
+      `/api/offerSubscriptions/${selectedOfferSubscription.OfferSubscriptionID}/usage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          SessionID: Number(createdSession.SessionID),
+          PatientID: Number(selectedAppointment.PatientID),
+          // Session offers allow optional pulses; pulse offers consume that count.
+          PulsesNo: enteredPulses,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to save offer usage.");
+    }
+
+    // Reload both views to show the new balance and the usage row just saved.
+    await Promise.all([
+      loadPatientActiveOffers(selectedAppointment.PatientID),
+      loadSessionOfferUsages(createdSession.SessionID),
+    ]);
+
+    setSelectedOfferSubscription(null);
+    setOfferPulsesNo("");
+    setOfferUsageMessage(
+      isRTL ? "تم حفظ استخدام العرض في الجلسة." : "Offer usage saved for this session."
+    );
+  } catch (saveError) {
+    setOfferError(saveError.message || "Failed to save offer usage.");
+  } finally {
+    setSavingOfferUsage(false);
+  }
+};
+
+// Close the picker without changing any offer subscription.
+const handleCloseOffersModal = () => {
+  if (offersLoading) return;
+  setShowOffersModal(false);
+  setOfferError("");
+};
+
+// Start editing the pulses and notes for one saved usage row.
+const handleEditOfferUsage = (usage) => {
+  setEditingOfferUsageID(usage.OfferSubscriptionUsageID);
+  setOfferUsageEditForm({
+    PulsesNo: String(usage.PulsesNo ?? 0),
+    Notes: usage.Notes || "",
+  });
+  setOfferError("");
+};
+
+// Discard the inline usage edit without sending it to the API.
+const handleCancelEditOfferUsage = () => {
+  setEditingOfferUsageID(null);
+  setOfferUsageEditForm({ PulsesNo: "", Notes: "" });
+};
+
+// Save an edited usage and refresh the current session balance display.
+const handleUpdateOfferUsage = async (event, usage) => {
+  event.preventDefault();
+
+  const isPulseOffer = Number(usage.CategoryID) === 2;
+  const pulsesNo = offerUsageEditForm.PulsesNo.trim() === ""
+    ? 0
+    : Number(offerUsageEditForm.PulsesNo);
+
+  if (!Number.isFinite(pulsesNo) || pulsesNo < 0 || (isPulseOffer && pulsesNo <= 0)) {
+    setOfferError(isRTL ? "أدخل عدد نبضات صالحاً." : "Enter a valid pulse quantity.");
+    return;
+  }
+
+  try {
+    setSavingOfferUsage(true);
+    setOfferError("");
+
+    const response = await fetch(
+      `/api/sessionOfferUsage/${usage.OfferSubscriptionUsageID}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          PulsesNo: pulsesNo,
+          Notes: offerUsageEditForm.Notes.trim() || null,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update offer usage.");
+    }
+
+    await Promise.all([
+      loadSessionOfferUsages(createdSession.SessionID),
+      loadPatientActiveOffers(selectedAppointment.PatientID),
+    ]);
+
+    handleCancelEditOfferUsage();
+    setOfferUsageMessage(isRTL ? "تم تحديث استخدام العرض." : "Offer usage updated.");
+  } catch (updateError) {
+    setOfferError(updateError.message || "Failed to update offer usage.");
+  } finally {
+    setSavingOfferUsage(false);
+  }
+};
+
+// Delete one usage row; the API restores its consumed quantity to the subscription.
+const handleDeleteOfferUsage = async (usage) => {
+  const confirmed = window.confirm(
+    isRTL ? "هل تريد حذف استخدام هذا العرض؟" : "Delete this offer usage? Its quantity will be restored."
+  );
+
+  if (!confirmed) return;
+
+  try {
+    setSavingOfferUsage(true);
+    setOfferError("");
+
+    const response = await fetch(
+      `/api/sessionOfferUsage/${usage.OfferSubscriptionUsageID}`,
+      { method: "DELETE" }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to delete offer usage.");
+    }
+
+    await Promise.all([
+      loadSessionOfferUsages(createdSession.SessionID),
+      loadPatientActiveOffers(selectedAppointment.PatientID),
+    ]);
+
+    if (editingOfferUsageID === usage.OfferSubscriptionUsageID) {
+      handleCancelEditOfferUsage();
+    }
+
+    setOfferUsageMessage(isRTL ? "تم حذف استخدام العرض واستعادة الرصيد." : "Offer usage deleted and its balance restored.");
+  } catch (deleteError) {
+    setOfferError(deleteError.message || "Failed to delete offer usage.");
+  } finally {
+    setSavingOfferUsage(false);
+  }
 };
 
 // LOAD TODAY'S SESSION SERVICES// =====================================================
@@ -532,6 +811,7 @@ const handleCreateSession = async () => {
 
     // LOAD SERVICES
     await loadSessionServices(data.SessionID, data.PatientID);
+    await loadSessionOfferUsages(data.SessionID);
 
   }
   catch (error) {
@@ -766,6 +1046,11 @@ const getSessionServicesSummary = () => {
 
 const {totalBeforeDiscount, totalDiscount, netDue,} = getSessionServicesSummary();
 
+// Subscriptions already used in this session cannot be selected a second time.
+const usedOfferSubscriptionIDs = new Set(
+  sessionOfferUsages.map((usage) => String(usage.OfferSubscriptionID))
+);
+
 const normalizedServiceSearch = serviceSearch.trim().toLocaleLowerCase();
 const filteredServices = services.filter(service =>
   !normalizedServiceSearch ||
@@ -829,6 +1114,14 @@ const filteredServices = services.filter(service =>
                 setSelectedAppointment(null);
                 setCreatedSession(null);
                 setSessionServices([]);
+                setPatientOfferSubscriptions([]);
+                setSessionOfferUsages([]);
+                setSelectedOfferSubscription(null);
+                setShowOffersModal(false);
+                setOfferPulsesNo("");
+                setOfferUsageMessage("");
+                setOfferError("");
+                setEditingOfferUsageID(null);
 
                 setSessionDate(getTodayDate() );
 
@@ -1500,6 +1793,232 @@ const filteredServices = services.filter(service =>
 
 
     {/* =================================================
+        OFFER USAGE
+        Offer usage is stored separately from SessionServices.
+    ================================================= */}
+
+    <section className="sessions-offers-section">
+
+      <div className="sessions-offers-heading">
+        <div>
+          <h3>{isRTL ? "استخدام العروض" : "Offer Usage"}</h3>
+          <p>
+            {isRTL
+              ? "استخدم رصيد اشتراك المريض في هذه الجلسة."
+              : "Use one of the patient’s offer subscriptions in this session."}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          className="sessions-add-services-button"
+          onClick={handleOpenOffersModal}
+          disabled={savingOfferUsage || savingServices}
+        >
+          + {isRTL ? "إضافة عرض" : "Add Offer"}
+        </button>
+      </div>
+
+      {offerUsageMessage && (
+        <div className="sessions-offer-success" role="status">
+          {offerUsageMessage}
+        </div>
+      )}
+
+      {offerError && !selectedOfferSubscription && (
+        <div className="sessions-error sessions-offer-error" role="alert">
+          {offerError}
+        </div>
+      )}
+
+      {/* Show every offer usage already recorded for this session. */}
+      {sessionOfferUsages.length > 0 && (
+        <div className="sessions-offer-usage-list">
+          <h4>{isRTL ? "العروض المستخدمة في هذه الجلسة" : "Offers Used in This Session"}</h4>
+
+          {sessionOfferUsages.map((usage) => (
+            <div className="sessions-offer-usage-entry" key={usage.OfferSubscriptionUsageID}>
+              {editingOfferUsageID === usage.OfferSubscriptionUsageID ? (
+                <form
+                  className="sessions-offer-usage-edit-form"
+                  onSubmit={(event) => handleUpdateOfferUsage(event, usage)}
+                >
+                  <strong>{usage.OfferName}</strong>
+
+                  <label htmlFor={`edit-offer-pulses-${usage.OfferSubscriptionUsageID}`}>
+                    {isRTL ? "عدد النبضات" : "Pulses Used"}
+                    {Number(usage.CategoryID) === 2 ? " *" : ""}
+                  </label>
+                  <input
+                    id={`edit-offer-pulses-${usage.OfferSubscriptionUsageID}`}
+                    type="number"
+                    min={Number(usage.CategoryID) === 2 ? "1" : "0"}
+                    max={Number(usage.CategoryID) === 2
+                      ? Number(usage.RemainingQuantity || 0) + Number(usage.ConsumedQuantity || 0)
+                      : undefined}
+                    step="1"
+                    value={offerUsageEditForm.PulsesNo}
+                    onChange={(event) => setOfferUsageEditForm((current) => ({
+                      ...current,
+                      PulsesNo: event.target.value,
+                    }))}
+                    required={Number(usage.CategoryID) === 2}
+                    disabled={savingOfferUsage}
+                  />
+
+                  <label htmlFor={`edit-offer-notes-${usage.OfferSubscriptionUsageID}`}>
+                    {isRTL ? "ملاحظات" : "Notes"}
+                  </label>
+                  <input
+                    id={`edit-offer-notes-${usage.OfferSubscriptionUsageID}`}
+                    type="text"
+                    maxLength={500}
+                    value={offerUsageEditForm.Notes}
+                    onChange={(event) => setOfferUsageEditForm((current) => ({
+                      ...current,
+                      Notes: event.target.value,
+                    }))}
+                    disabled={savingOfferUsage}
+                  />
+
+                  <div className="sessions-offer-usage-row-actions">
+                    <button
+                      type="button"
+                      className="sessions-modal-cancel"
+                      onClick={handleCancelEditOfferUsage}
+                      disabled={savingOfferUsage}
+                    >
+                      {isRTL ? "إلغاء" : "Cancel"}
+                    </button>
+                    <button
+                      type="submit"
+                      className="sessions-modal-add"
+                      disabled={savingOfferUsage}
+                    >
+                      {savingOfferUsage
+                        ? (isRTL ? "جارٍ الحفظ..." : "Saving...")
+                        : (isRTL ? "حفظ" : "Save")}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <>
+                  <div className="sessions-offer-usage-details">
+                    <strong>{usage.OfferName}</strong>
+                    <span>{usage.CategoryName}</span>
+                    <span>
+                      {isRTL ? "المستهلك" : "Consumed"}: {Number(usage.ConsumedQuantity || 0).toLocaleString()}
+                    </span>
+                    <span>
+                      {isRTL ? "النبضات" : "Pulses"}: {Number(usage.PulsesNo || 0).toLocaleString()}
+                    </span>
+                    <span>
+                      {isRTL ? "رصيد العرض" : "Offer Remaining"}: {Number(usage.RemainingQuantity || 0).toLocaleString()}
+                    </span>
+                    <span>{usage.UsageDate ? new Date(usage.UsageDate).toLocaleDateString() : "-"}</span>
+                  </div>
+
+                  <div className="sessions-offer-usage-row-actions">
+                    <button
+                      type="button"
+                      className="sessions-offer-edit-button"
+                      onClick={() => handleEditOfferUsage(usage)}
+                      disabled={savingOfferUsage}
+                    >
+                      {isRTL ? "تعديل" : "Edit"}
+                    </button>
+                    <button
+                      type="button"
+                      className="sessions-offer-delete-button"
+                      onClick={() => handleDeleteOfferUsage(usage)}
+                      disabled={savingOfferUsage}
+                    >
+                      {isRTL ? "حذف" : "Delete"}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {selectedOfferSubscription && (
+        <div className="sessions-selected-offer">
+          {offerError && (
+            <div className="sessions-error sessions-offer-error" role="alert">
+              {offerError}
+            </div>
+          )}
+
+          <div className="sessions-selected-offer-summary">
+            <strong>{selectedOfferSubscription.OfferName}</strong>
+            <span>
+              {selectedOfferSubscription.CategoryName ||
+                (Number(selectedOfferSubscription.CategoryID) === 2 ? "Pulse" : "Session")}
+            </span>
+            <span>
+              {isRTL ? "المتاح" : "Remaining"}: {Number(selectedOfferSubscription.RemainingQuantity || 0).toLocaleString()}
+            </span>
+          </div>
+
+          <div className="sessions-offer-usage-form">
+            <label htmlFor="offer-usage-pulses">
+              {isRTL ? "عدد النبضات" : "Pulses Used"}
+              {Number(selectedOfferSubscription.CategoryID) === 2 ? " *" : ""}
+            </label>
+            <input
+              id="offer-usage-pulses"
+              type="number"
+              min={Number(selectedOfferSubscription.CategoryID) === 2 ? "1" : "0"}
+              max={Number(selectedOfferSubscription.CategoryID) === 2
+                ? Number(selectedOfferSubscription.RemainingQuantity || 0)
+                : undefined}
+              step="1"
+              value={offerPulsesNo}
+              onChange={(event) => setOfferPulsesNo(event.target.value)}
+              placeholder={isRTL ? "اختياري لعروض الجلسات" : "Optional for session offers"}
+              required={Number(selectedOfferSubscription.CategoryID) === 2}
+              disabled={savingOfferUsage}
+            />
+            <p>
+              {Number(selectedOfferSubscription.CategoryID) === 2
+                ? (isRTL
+                  ? "سيُخصم عدد النبضات المدخل من رصيد العرض."
+                  : "The entered pulse count will be deducted from the offer balance.")
+                : (isRTL
+                  ? "سيُخصم استخدام جلسة واحدة. يمكن تسجيل عدد النبضات اختيارياً."
+                  : "One session will be consumed. You may also record pulses used.")}
+            </p>
+
+            <div className="sessions-offer-usage-actions">
+              <button
+                type="button"
+                className="sessions-modal-cancel"
+                onClick={() => setSelectedOfferSubscription(null)}
+                disabled={savingOfferUsage}
+              >
+                {isRTL ? "إلغاء" : "Cancel"}
+              </button>
+              <button
+                type="button"
+                className="sessions-modal-add"
+                onClick={handleSaveOfferUsage}
+                disabled={savingOfferUsage}
+              >
+                {savingOfferUsage
+                  ? (isRTL ? "جارٍ حفظ الاستخدام..." : "Saving Usage...")
+                  : (isRTL ? "حفظ استخدام العرض" : "Save Offer Usage")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+    </section>
+
+
+    {/* =================================================
         ADD SERVICES MODAL
     ================================================= */}
 
@@ -1672,6 +2191,133 @@ const filteredServices = services.filter(service =>
 
       </div>
 
+    )}
+
+
+    {/* =================================================
+        ACTIVE OFFER SUBSCRIPTIONS MODAL
+    ================================================= */}
+
+    {showOffersModal && (
+      <div className="sessions-modal-overlay" onMouseDown={(event) => {
+        if (event.target === event.currentTarget) handleCloseOffersModal();
+      }}>
+        <section
+          className="sessions-services-modal sessions-offers-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="sessions-offers-modal-title"
+        >
+          <header className="sessions-modal-header">
+            <div>
+              <h2 id="sessions-offers-modal-title">
+                {isRTL ? "العروض النشطة للمريض" : "Patient’s Active Offers"}
+              </h2>
+              <p>{selectedAppointment?.PatientName}</p>
+            </div>
+            <button
+              type="button"
+              className="sessions-modal-close"
+              onClick={handleCloseOffersModal}
+              disabled={offersLoading}
+              aria-label={isRTL ? "إغلاق" : "Close"}
+            >
+              ×
+            </button>
+          </header>
+
+          {offerError && (
+            <div className="sessions-error sessions-offer-error" role="alert">
+              {offerError}
+            </div>
+          )}
+
+          {usedOfferSubscriptionIDs.size > 0 && (
+            <p className="sessions-offers-modal-notice">
+              {isRTL
+                ? "تم استخدام بعض الاشتراكات في هذه الجلسة؛ يمكنك اختيار اشتراك نشط آخر."
+                : "Subscriptions already used in this session are disabled. You can select another active offer."}
+            </p>
+          )}
+
+          <div className="sessions-offers-modal-body">
+            {offersLoading ? (
+              <div className="sessions-loading">
+                {isRTL ? "جارٍ تحميل العروض..." : "Loading active offers..."}
+              </div>
+            ) : patientOfferSubscriptions.length === 0 ? (
+              <div className="sessions-empty">
+                {isRTL
+                  ? "لا توجد اشتراكات نشطة لها رصيد متبقٍ."
+                  : "This patient has no active offers with remaining balance."}
+              </div>
+            ) : (
+              <div className="sessions-offers-table-wrapper">
+                <table className="sessions-offers-table">
+                  <thead>
+                    <tr>
+                      <th>{isRTL ? "العرض" : "Offer"}</th>
+                      <th>{isRTL ? "النوع" : "Type"}</th>
+                      <th>{isRTL ? "الكمية" : "Given"}</th>
+                      <th>{isRTL ? "المستهلك" : "Consumed"}</th>
+                      <th>{isRTL ? "المتبقي" : "Remaining"}</th>
+                      <th>{isRTL ? "الإجراء" : "Action"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {patientOfferSubscriptions.map((subscription) => {
+                      const alreadyUsedInSession = usedOfferSubscriptionIDs.has(
+                        String(subscription.OfferSubscriptionID)
+                      );
+
+                      return (
+                      <tr key={subscription.OfferSubscriptionID}>
+                        <td>
+                          <strong>{subscription.OfferName}</strong>
+                        </td>
+                        <td>
+                          {subscription.CategoryName ||
+                            (Number(subscription.CategoryID) === 2 ? "Pulse" : "Session")}
+                        </td>
+                        <td>{Number(subscription.GivenQuantity || 0).toLocaleString()}</td>
+                        <td>{Number(subscription.ConsumedQuantity || 0).toLocaleString()}</td>
+                        <td>{Number(subscription.RemainingQuantity || 0).toLocaleString()}</td>
+                        <td>
+                          <button
+                            type="button"
+                            className="sessions-modal-add"
+                            onClick={() => handleSelectOfferSubscription(subscription)}
+                            disabled={alreadyUsedInSession}
+                            title={alreadyUsedInSession
+                              ? (isRTL ? "تم استخدام هذا الاشتراك في الجلسة" : "This subscription is already used in this session")
+                              : ""}
+                          >
+                            {alreadyUsedInSession
+                              ? (isRTL ? "مستخدم بالفعل" : "Already Used")
+                              : (isRTL ? "اختيار" : "Select")}
+                          </button>
+                        </td>
+                      </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          <footer className="sessions-modal-footer">
+            <button
+              type="button"
+              className="sessions-modal-cancel"
+              onClick={handleCloseOffersModal}
+              disabled={offersLoading}
+            >
+              {isRTL ? "إغلاق" : "Close"}
+            </button>
+          </footer>
+        </section>
+      </div>
     )}
 
   </div>

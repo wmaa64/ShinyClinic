@@ -940,12 +940,7 @@ const handleEditAppointment = async (appointment) => {
                 FORM
             --------------------------------------------- */}
 
-            <form
-              className="appointments-form"
-              onSubmit={
-                handleSubmit
-              }
-            >
+            <form  className="appointments-form"  onSubmit={ handleSubmit} >
 
               <div className="appointments-form-grid">
                 
@@ -975,9 +970,7 @@ const handleEditAppointment = async (appointment) => {
                       </div>
 
 
-                      <button
-                        type="button"
-                        className="appointment-change-patient"
+                      <button  type="button"   className="appointment-change-patient"
                         onClick={() => {
 
                           setSelectedPatient(null);
@@ -1003,14 +996,10 @@ const handleEditAppointment = async (appointment) => {
                       {/* PATIENT SEARCH */}
                       <div className="appointment-patient-search">
 
-                        <input
-                          type="text"
-                          value={patientSearch}
+                        <input  type="text"   value={patientSearch}
                           placeholder={isRTL ? "بحث عن مريض بالاسم أو رقم الملف..." : 
                                                "Search patient by name or file number..."}
-                          onChange={(event) =>
-                            searchPatients(event.target.value)
-                          }
+                          onChange={(event) =>  searchPatients(event.target.value) }
                         />
 
                       </div>
@@ -1035,10 +1024,7 @@ const handleEditAppointment = async (appointment) => {
 
                           {patientResults.map((patient) => (
 
-                            <button
-                              type="button"
-                              key={patient.PatientID}
-                              className="appointment-patient-result"
+                            <button type="button"   key={patient.PatientID}   className="appointment-patient-result"
                               onClick={() => {
 
                                 setSelectedPatient(patient);

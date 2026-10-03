@@ -120,6 +120,35 @@ const NavBar = () => {
         },
 
         // -------------------------------------------------
+        // Offers
+        // -------------------------------------------------
+
+        {
+            type: "menu",
+            name: "offers",
+            labelEn: "Offers",
+            labelAr: "العروض",
+            roleIDs: [1,3,9],
+
+            children: [
+                {
+                    href: "/offerSubscriptions",
+                    labelEn: "Subscriptions",
+                    labelAr: "الاشتراكات",
+                    roleIDs: [1,3,9],
+                },
+
+                {
+                    href: "/",
+                    labelEn: "Patient Offers",
+                    labelAr: "عروض مريض",
+                    roleIDs: [1,9],
+                },
+
+            ]
+        },
+
+        // -------------------------------------------------
         // PAYMENTS
         // -------------------------------------------------
 
@@ -131,33 +160,6 @@ const NavBar = () => {
             labelAr: "المدفوعات",
             roleIDs: [1,3],
         },
-
-        // -------------------------------------------------
-        // PULSE CONTROL
-        // -------------------------------------------------
-
-        {
-            type: "link",
-            name: "pulseControl",
-            href: "/dailyPulse",
-            labelEn: "Pulse Control",
-            labelAr: "تحكم بالنبضات",
-            roleIDs: [1,3],
-        },
-
-        // -------------------------------------------------
-        // SESSIONS for DOCTORS
-        // -------------------------------------------------
-
-        {
-            type: "link",
-            name: "sessions",
-            href: "/sessions",
-            labelEn: "Doctor Sessions",
-            labelAr: "الجلسات للطبيب",
-            roleIDs: [1,2],
-        },
-
 
         // -------------------------------------------------
         // QUERIES
@@ -172,16 +174,9 @@ const NavBar = () => {
 
             children: [
                 {
-                    href: "/doctorPulses",
-                    labelEn: "Doctor Pulses",
-                    labelAr: "نبضات الأطباء",
-                    roleIDs: [1,3,9],
-                },
-
-                {
                     href: "/revenue",
-                    labelEn: "Revenue",
-                    labelAr: "الإيرادات",
+                    labelEn: "Revenue for Period",
+                    labelAr: "إيرادات عن فترة",
                     roleIDs: [1,9],
                 },
 
@@ -213,6 +208,13 @@ const NavBar = () => {
                     href: "/users",
                     labelEn: "Users",
                     labelAr: "المستخدمين",
+                    roleIDs: [1],
+                },
+
+                {
+                    href: "/offers",
+                    labelEn: "Offers",
+                    labelAr: "العروض",
                     roleIDs: [1],
                 },
 

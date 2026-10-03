@@ -13,6 +13,7 @@ import "../styles/sessionPayments.css";
 import "../styles/dailyPulse.css";
 import "../styles/revenue.css";
 import "../styles/doctorPulses.css";
+import "../styles/offers.css";
 
 
 import "../styles/index.scss";  /* main styles */

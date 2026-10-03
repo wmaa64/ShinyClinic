@@ -1,0 +1,1141 @@
+/* Offers management page */
+.offers-page {
+  min-height: 70vh;
+  padding: 8px 10px 28px;
+  color: #1f2937;
+  background: #f5f7fa;
+}
+
+.offers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.offers-header h1 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.offers-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.offers-add-button,
+.offers-search button,
+.offers-edit-button,
+.offers-save-button,
+.offers-cancel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .15s ease, opacity .15s ease;
+}
+
+.offers-add-button,
+.offers-search button,
+.offers-save-button,
+.offers-edit-button {
+  background: #2563eb;
+}
+
+.offers-add-button:hover,
+.offers-search button:hover,
+.offers-save-button:hover,
+.offers-edit-button:hover {
+  background: #1d4ed8;
+}
+
+.offers-add-button span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.offers-cancel-button {
+  background: #64748b;
+}
+
+.offers-cancel-button:hover {
+  background: #475569;
+}
+
+.offers-add-button:disabled,
+.offers-search button:disabled,
+.offers-save-button:disabled,
+.offers-cancel-button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.offers-section {
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .04);
+}
+
+.offers-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.offers-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 620px);
+  gap: 8px;
+}
+
+.offers-search > span {
+  position: absolute;
+  left: 13px;
+  color: #64748b;
+  font-size: 21px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.offers-search input {
+  width: 100%;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 0 13px 0 40px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  background: #fff;
+  color: #1f2937;
+  font: inherit;
+  font-size: 14px;
+}
+
+.offers-search input:focus,
+.offers-form-group input:focus,
+.offers-form-group select:focus,
+.offers-form-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, .1);
+}
+
+.offers-search button {
+  flex: 0 0 105px;
+  height: 42px;
+}
+
+.offers-count {
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.offers-error {
+  margin: 0 0 16px;
+  padding: 11px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.offers-message {
+  padding: 44px 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #fff;
+  color: #6b7280;
+  text-align: center;
+  font-size: 14px;
+}
+
+.offers-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.offers-table {
+  width: 100%;
+  min-width: 870px;
+  border-collapse: collapse;
+}
+
+.offers-table th {
+  padding: 11px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.offers-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #374151;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.offers-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.offers-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.offers-name-cell {
+  color: #111827 !important;
+  font-weight: 600;
+}
+
+.offers-status-active,
+.offers-status-inactive {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.offers-status-active {
+  background: #e8f7ee;
+  color: #16803c;
+}
+
+.offers-status-inactive {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.offers-edit-button {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.offers-modal-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, .52);
+}
+
+.offers-modal {
+  width: min(100%, 680px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .25);
+}
+
+.offers-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 19px 22px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.offers-modal-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 19px;
+}
+
+.offers-modal-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.offers-close-button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.offers-close-button:hover {
+  background: #f1f5f9;
+}
+
+.offers-close-button:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+.offers-modal-error {
+  margin: 16px 22px 0;
+}
+
+.offers-form {
+  padding: 20px 22px 22px;
+}
+
+.offers-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.offers-form-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.offers-form-full {
+  grid-column: 1 / -1;
+}
+
+.offers-form-group label {
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.offers-form-group input,
+.offers-form-group select,
+.offers-form-group textarea,
+.offers-unit-price {
+  width: 100%;
+  min-height: 41px;
+  box-sizing: border-box;
+  padding: 9px 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  background: #fff;
+  color: #1f2937;
+  font: inherit;
+  font-size: 14px;
+}
+
+.offers-form-group textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.offers-unit-price {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.offers-active-toggle {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  gap: 9px;
+  min-height: 41px;
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.offers-active-toggle input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: #2563eb;
+}
+
+.offers-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+[dir="rtl"] .offers-search > span {
+  right: 13px;
+  left: auto;
+}
+
+[dir="rtl"] .offers-search input {
+  padding-right: 40px;
+  padding-left: 13px;
+}
+
+[dir="rtl"] .offers-table th,
+[dir="rtl"] .offers-table td {
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .offers-page {
+    padding: 8px 5px 22px;
+  }
+
+  .offers-header {
+    align-items: flex-start;
+  }
+
+  .offers-header h1 {
+    font-size: 23px;
+  }
+
+  .offers-add-button {
+    flex: 0 0 auto;
+    padding: 9px 12px;
+  }
+
+  .offers-section {
+    padding: 13px;
+  }
+
+  .offers-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .offers-search {
+    width: 100%;
+  }
+
+  .offers-search button {
+    flex-basis: 85px;
+    padding: 8px;
+  }
+
+  .offers-count {
+    align-self: flex-end;
+  }
+
+  .offers-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .offers-form-full {
+    grid-column: auto;
+  }
+
+  .offers-modal-overlay {
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .offers-modal {
+    max-height: calc(100vh - 24px);
+  }
+
+  .offers-modal-header,
+  .offers-form {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .offers-modal-error {
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+
+  .offers-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .offers-form-actions button {
+    width: 100%;
+  }
+}
+
+/* Offer subscriptions management */
+.offer-subscriptions-page {
+  min-height: 70vh;
+  padding: 8px 10px 28px;
+  color: #1f2937;
+  background: #f5f7fa;
+}
+
+.offer-subscriptions-header {
+  margin-bottom: 22px;
+}
+
+.offer-subscriptions-header h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.offer-subscriptions-header p,
+.offer-subscriptions-panel-heading p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.offer-subscriptions-alert {
+  margin-bottom: 16px;
+  padding: 12px 15px;
+  border: 1px solid;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.offer-subscriptions-alert.error {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.offer-subscriptions-alert.success {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.offer-subscriptions-panel {
+  margin-bottom: 20px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .04);
+}
+
+.offer-subscriptions-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 16px;
+}
+
+.offer-subscriptions-panel-heading h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.offer-subscriptions-count {
+  min-width: 30px;
+  padding: 5px 9px;
+  border-radius: 16px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.offer-subscriptions-search {
+  display: flex;
+  gap: 8px;
+  max-width: 680px;
+  margin-bottom: 14px;
+}
+
+.offer-subscriptions-search input,
+.offer-subscriptions-field input,
+.offer-subscriptions-field select,
+.offer-subscriptions-field textarea {
+  width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  background: #fff;
+  color: #1f2937;
+  font: inherit;
+  font-size: 14px;
+}
+
+.offer-subscriptions-search input:focus,
+.offer-subscriptions-field input:focus,
+.offer-subscriptions-field select:focus,
+.offer-subscriptions-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, .1);
+}
+
+.offer-subscriptions-search button,
+.offer-subscriptions-actions button,
+.offer-subscriptions-payment-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 15px;
+  border: 0;
+  border-radius: 7px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.offer-subscriptions-search button:hover,
+.offer-subscriptions-actions button:hover,
+.offer-subscriptions-payment-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.offer-subscriptions-search button:disabled,
+.offer-subscriptions-actions button:disabled,
+.offer-subscriptions-payment-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.offer-subscriptions-patient-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 9px;
+}
+
+.offer-subscriptions-patient {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #64748b;
+  text-align: start;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.offer-subscriptions-patient strong {
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.offer-subscriptions-patient:hover,
+.offer-subscriptions-patient.selected {
+  border-color: #60a5fa;
+  background: #eff6ff;
+}
+
+.offer-subscriptions-message {
+  padding: 32px 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #6b7280;
+  text-align: center;
+  font-size: 14px;
+}
+
+.offer-subscriptions-form,
+.offer-subscriptions-payment-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.offer-subscriptions-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.offer-subscriptions-field label {
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.offer-subscriptions-field textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.offer-subscriptions-form > .offer-subscriptions-field:first-child,
+.offer-subscriptions-field-wide {
+  grid-column: 1 / -1;
+}
+
+.offer-subscriptions-offer-summary {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  gap: 10px 22px;
+  padding: 12px 14px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #475569;
+  font-size: 13px;
+}
+
+.offer-subscriptions-offer-summary strong {
+  color: #1e3a8a;
+}
+
+.offer-subscriptions-actions {
+  display: flex;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+}
+
+.offer-subscriptions-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.offer-subscriptions-table {
+  width: 100%;
+  min-width: 1250px;
+  border-collapse: collapse;
+}
+
+.offer-subscriptions-table th,
+.offer-subscriptions-table td {
+  padding: 10px 11px;
+  border-bottom: 1px solid #edf0f3;
+  color: #374151;
+  text-align: left;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.offer-subscriptions-table th {
+  background: #f9fafb;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.offer-subscriptions-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.offer-subscriptions-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.offer-subscriptions-name {
+  color: #111827 !important;
+  font-weight: 600;
+}
+
+.offer-subscriptions-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 15px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.offer-subscriptions-status.cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.offer-subscriptions-payment-button {
+  min-height: 32px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.offer-subscriptions-modal-overlay {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, .52);
+}
+
+.offer-subscriptions-modal {
+  width: min(100%, 650px);
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .25);
+}
+
+.offer-subscriptions-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.offer-subscriptions-modal-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 19px;
+}
+
+.offer-subscriptions-modal-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.offer-subscriptions-modal-header button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.offer-subscriptions-payment-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  padding: 16px 20px;
+}
+
+.offer-subscriptions-payment-summary span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 11px;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.offer-subscriptions-payment-summary strong {
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.offer-subscriptions-modal > .offer-subscriptions-alert {
+  margin: 0 20px 14px;
+}
+
+.offer-subscriptions-payment-history {
+  padding: 0 20px 18px;
+}
+
+.offer-subscriptions-payment-history h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+
+.offer-subscriptions-payment-history p {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.offer-subscriptions-history-list {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.offer-subscriptions-history-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  padding: 9px 11px;
+  border-bottom: 1px solid #edf0f3;
+  color: #475569;
+  font-size: 13px;
+}
+
+.offer-subscriptions-history-row:last-child {
+  border-bottom: 0;
+}
+
+.offer-subscriptions-history-row strong {
+  color: #1f2937;
+}
+
+.offer-subscriptions-payment-form {
+  padding: 0 20px 20px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 17px;
+}
+
+[dir="rtl"] .offer-subscriptions-table th,
+[dir="rtl"] .offer-subscriptions-table td {
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .offer-subscriptions-page {
+    padding: 8px 5px 22px;
+  }
+
+  .offer-subscriptions-header h1 {
+    font-size: 23px;
+  }
+
+  .offer-subscriptions-panel {
+    padding: 13px;
+  }
+
+  .offer-subscriptions-search {
+    flex-direction: column;
+  }
+
+  .offer-subscriptions-search button {
+    width: 100%;
+  }
+
+  .offer-subscriptions-form,
+  .offer-subscriptions-payment-form {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-subscriptions-form > .offer-subscriptions-field:first-child,
+  .offer-subscriptions-field-wide,
+  .offer-subscriptions-actions {
+    grid-column: auto;
+  }
+
+  .offer-subscriptions-actions button {
+    width: 100%;
+  }
+
+  .offer-subscriptions-payment-summary {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .offer-subscriptions-payment-summary span {
+    padding: 8px;
+  }
+
+  .offer-subscriptions-payment-summary strong {
+    font-size: 13px;
+  }
+
+  .offer-subscriptions-modal-header,
+  .offer-subscriptions-payment-history,
+  .offer-subscriptions-payment-form {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .offer-subscriptions-modal > .offer-subscriptions-alert {
+    margin-right: 14px;
+    margin-left: 14px;
+  }
+}
+
+.offer-subscriptions-payment-hint {
+  grid-column: 1 / -1;
+  margin: -7px 0 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .offer-subscriptions-payment-hint {
+    grid-column: auto;
+  }
+}
+
+.offer-subscriptions-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.offer-subscriptions-edit-button,
+.offer-subscriptions-delete-button,
+.offer-subscriptions-cancel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 9px;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.offer-subscriptions-edit-button {
+  background: #2563eb;
+}
+
+.offer-subscriptions-delete-button,
+.offer-subscriptions-cancel-button {
+  background: #dc2626;
+}
+
+.offer-subscriptions-edit-button:disabled,
+.offer-subscriptions-delete-button:disabled,
+.offer-subscriptions-cancel-button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.offer-subscriptions-edit-note {
+  margin: 15px 20px 0;
+  padding: 10px 12px;
+  border: 1px solid #fde68a;
+  border-radius: 7px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 13px;
+}
+
+.offer-subscriptions-modal .offer-subscriptions-payment-form {
+  padding-top: 20px;
+}
+
+.offer-subscriptions-modal .offer-subscriptions-actions {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.offer-subscriptions-cancel-button {
+  background: #64748b;
+}
+
+@media (max-width: 700px) {
+  .offer-subscriptions-row-actions {
+    flex-wrap: wrap;
+  }
+
+  .offer-subscriptions-modal .offer-subscriptions-actions {
+    flex-direction: column-reverse;
+  }
+
+  .offer-subscriptions-modal .offer-subscriptions-actions button {
+    width: 100%;
+  }
+
+  .offer-subscriptions-edit-note {
+    margin-right: 14px;
+    margin-left: 14px;
+  }
+}
+.offer-subscriptions-action-hint {
+  width: 100%;
+  color: #92400e;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.offer-subscriptions-history-list {
+  max-height: 320px;
+}
+
+.offer-subscriptions-history-entry {
+  border-bottom: 1px solid #edf0f3;
+}
+
+.offer-subscriptions-history-entry:last-child {
+  border-bottom: 0;
+}
+
+.offer-subscriptions-history-row {
+  grid-template-columns: minmax(90px, 1fr) minmax(100px, 1fr) auto auto;
+  align-items: center;
+  border-bottom: 0;
+}
+
+.offer-subscriptions-history-actions,
+.offer-subscriptions-history-edit-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.offer-subscriptions-history-edit {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(140px, 1fr);
+  gap: 10px;
+  padding: 12px;
+}
+
+.offer-subscriptions-history-edit .offer-subscriptions-field {
+  min-width: 0;
+}
+
+.offer-subscriptions-usage-lock {
+  margin: 0 0 10px;
+  padding: 9px 11px;
+  border: 1px solid #fde68a;
+  border-radius: 7px;
+  background: #fffbeb;
+  color: #92400e !important;
+}
+
+@media (max-width: 700px) {
+  .offer-subscriptions-history-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .offer-subscriptions-history-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .offer-subscriptions-history-edit {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-subscriptions-history-edit-actions {
+    grid-column: auto;
+  }
+}
