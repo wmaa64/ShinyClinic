@@ -1,5 +1,5 @@
 import {
-  useOfferSubscription,
+  consumeOfferSubscription,
 } from "../../../../../controllers/offerSubscriptionController";
 
 
@@ -138,7 +138,7 @@ export default async function handler(req, res) {
       // -------------------------------------------------
 
       const result =
-        await useOfferSubscription(
+        await consumeOfferSubscription(
           parsedSubscriptionID,
           parsedSessionID,
           parsedPatientID,

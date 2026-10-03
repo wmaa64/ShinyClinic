@@ -1180,7 +1180,7 @@ const deleteOfferSubscriptionPayment = async (offerSubscriptionID, paymentID) =>
 //
 // =====================================================
 
-const useOfferSubscription = async ( offerSubscriptionID, sessionID, patientID, pulsesNo, notes = null ) => {
+const consumeOfferSubscription = async ( offerSubscriptionID, sessionID, patientID, pulsesNo, notes = null ) => {
 
   const pool = await connectDB();
 
@@ -2143,7 +2143,7 @@ export {
 
   deleteOfferSubscriptionPayment,
   
-  useOfferSubscription,
+  consumeOfferSubscription,
 
   getSessionOfferUsages,
 
