@@ -233,6 +233,13 @@ const NavBar = () => {
                 },
 
                 {
+                    href: "/doctorRevenuePercentages",
+                    labelEn: "Doctor Revenue Percentages",
+                    labelAr: "نسب إيرادات الطبيب",
+                    roleIDs: [1],
+                },
+
+                {
                     href: "/devices",
                     labelEn: "Devices",
                     labelAr: "الأجهزة",

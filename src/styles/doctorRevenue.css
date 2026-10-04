@@ -53,10 +53,11 @@
 
 .doctor-revenue-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
   margin-bottom: 22px;
 }
+
 .doctor-revenue-card {
   display: flex;
   min-height: 88px;
@@ -73,6 +74,7 @@
 .doctor-revenue-card strong { color: #263247; font-size: 21px; }
 .doctor-revenue-grand-total { border-color: #bfdbfe; background: #eff6ff; }
 .doctor-revenue-grand-total strong { color: #1d4ed8; font-size: 23px; }
+.doctor-revenue-total-percentage strong { color: green; font-size: 23px; }
 
 .doctor-revenue-section {
   margin-top: 20px;

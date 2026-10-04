@@ -15,6 +15,7 @@ const DoctorRevenue = () => {
 
   const [doctors, setDoctors] = useState([]);
   const [doctorID, setDoctorID] = useState("");
+  const [doctorRevenuePercentage, setDoctorRevenuePercentage] = useState(null);
   
   const [fromDate, setFromDate] = useState(firstDayOfMonth());
   const [toDate, setToDate] = useState(today());
@@ -70,6 +71,8 @@ const DoctorRevenue = () => {
       setSessionServices(Array.isArray(data.sessionServices) ? data.sessionServices : []);
 
       setOfferUsage(Array.isArray(data.offerUsage) ? data.offerUsage : []);
+      
+      setDoctorRevenuePercentage(data.doctorRevenuePercentage || null);
 
       setHasSearched(true);
 
@@ -87,8 +90,13 @@ const DoctorRevenue = () => {
   const summary = useMemo(() => {
     const sessionTotal = sessionServices.reduce((sum, row) => sum + Number(row.LineTotal || 0), 0);
     const offerTotal = offerUsage.reduce((sum, row) => sum + Number(row.AttributedRevenue || 0), 0);
-    return { sessionTotal, offerTotal, combinedTotal: sessionTotal + offerTotal };
-  }, [sessionServices, offerUsage]);
+
+    return  { sessionTotal, offerTotal, combinedTotal: sessionTotal + offerTotal, 
+              doctorRevenue: doctorRevenuePercentage ? 
+              (sessionTotal + offerTotal) * (Number(doctorRevenuePercentage.Percentage || 0) / 100) : null 
+            };
+
+  }, [sessionServices, offerUsage, doctorRevenuePercentage]);
 
   const money = (value) => Number(value || 0).toLocaleString(isRTL ? "ar-EG" : "en-EG", {
     minimumFractionDigits: 2,
@@ -141,18 +149,27 @@ const DoctorRevenue = () => {
 
       {hasSearched && (
         <section className="doctor-revenue-summary" aria-label={text("Revenue summary", "ملخص الإيرادات")}>
+
           <article className="doctor-revenue-card">
             <span>{text("Session services", "خدمات الجلسات")}</span>
             <strong>{money(summary.sessionTotal)} EGP</strong>
           </article>
+
           <article className="doctor-revenue-card">
             <span>{text("Offer usage", "استخدام العروض")}</span>
             <strong>{money(summary.offerTotal)} EGP</strong>
           </article>
+
           <article className="doctor-revenue-card doctor-revenue-grand-total">
             <span>{text("Total doctor revenue", "إجمالي إيرادات الطبيب")}</span>
             <strong>{money(summary.combinedTotal)} EGP</strong>
           </article>
+
+          <article className="doctor-revenue-card doctor-revenue-total-percentage">
+            <span>{text("doctor revenue percentage", "نسبة إيرادات الطبيب")}</span>
+            <strong>{summary.doctorRevenue ? money(summary.doctorRevenue) : "—"} EGP</strong>
+          </article>
+
         </section>
       )}
 

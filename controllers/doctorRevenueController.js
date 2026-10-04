@@ -17,6 +17,7 @@ export const getDoctorRevenue = async (doctorID, fromDate, toDate) => {
   }
 
   const pool = await connectDB();
+
   const request = pool.request()
     .input("DoctorID", sql.Int, parsedDoctorID)
     .input("FromDate", sql.Date, fromDate)
@@ -73,10 +74,25 @@ export const getDoctorRevenue = async (doctorID, fromDate, toDate) => {
       AND LS.SessionDate >= @FromDate
       AND LS.SessionDate < DATEADD(DAY, 1, @ToDate)
     ORDER BY LS.SessionDate, LS.SessionID, OSU.OfferSubscriptionUsageID;
+
+    SELECT
+      DRP.DoctorRevenuePercentageID,
+      DRP.UserID,
+      U.FullName AS DoctorName,
+      U.UserName,
+      DRP.Percentage,
+      DRP.IsActive,
+      DRP.CreatedAt
+    FROM dbo.DoctorRevenuePercentages DRP
+    INNER JOIN dbo.Users U 
+      ON DRP.UserID = U.UserID
+    WHERE DRP.UserID = @DoctorID
+    AND U.RoleID = 2
   `);
 
   return {
     sessionServices: result.recordsets[0] || [],
     offerUsage: result.recordsets[1] || [],
+    doctorRevenuePercentage: result.recordsets[2]?.[0] ?? null,
   };
 };
