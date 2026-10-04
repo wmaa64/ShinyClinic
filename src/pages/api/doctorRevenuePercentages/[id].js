@@ -2,7 +2,7 @@ import {
   getDoctorRevenuePercentageById,
   updateDoctorRevenuePercentage,
   deleteDoctorRevenuePercentage,
-} from "../../../controllers/doctorRevenuePercentageController";
+} from "../../../../controllers/doctorRevenuePercentageController";
 
 export default async function handler(req, res) {
   const { id } = req.query;
