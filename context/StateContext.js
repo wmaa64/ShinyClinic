@@ -30,6 +30,7 @@ export const StateContext = ({ children }) => {
             UserName: user.UserName,
             FullName: user.FullName,
             RoleID: user.RoleID,
+            LoginHistoryID: user.LoginHistoryID || null,
         };
 
         setUserInfo(loggedInUser);
@@ -41,6 +42,22 @@ export const StateContext = ({ children }) => {
 
     // Logout function
     const logoutUser = () => {
+        const currentUser = userInfo;
+
+        // Save the logout time before clearing local state; logging errors do not block logout.
+        if (currentUser?.LoginHistoryID) {
+            fetch("/api/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    LoginHistoryID: currentUser.LoginHistoryID,
+                    UserID: currentUser.UserID,
+                }),
+            }).catch((error) => {
+                console.error("Logout history request failed:", error);
+            });
+        }
+
         setUserInfo(null);
         localStorage.removeItem("userInfo");
         toast.success("Logged out successfully!");

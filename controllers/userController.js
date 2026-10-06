@@ -472,6 +472,85 @@ const deleteUser = async (id) => {
   return result.recordset[0] || null;
 };
 
+// =====================================================
+// RECORD USER LOGIN
+// =====================================================
+
+const recordUserLogin = async (UserID, IPAddress, UserAgent) => {
+
+  if (!UserID) {
+    throw new Error("UserID is required");
+  }
+
+  const pool = await connectDB();
+
+  const result = await pool
+    .request()
+    .input("UserID", sql.Int, Number(UserID))
+    .input("IPAddress", sql.NVarChar(50), IPAddress || null)
+    .input("UserAgent", sql.NVarChar(500), UserAgent || null)
+    .query(`
+      INSERT INTO dbo.UserLoginHistory
+      (
+        UserID,
+        LoginDate,
+        IPAddress,
+        UserAgent
+      )
+      OUTPUT
+        INSERTED.LoginHistoryID,
+        INSERTED.UserID,
+        INSERTED.LoginDate,
+        INSERTED.LogoutDate,
+        INSERTED.IPAddress,
+        INSERTED.UserAgent
+      VALUES
+      (
+        @UserID,
+        GETDATE(),
+        @IPAddress,
+        @UserAgent
+      )
+    `);
+
+  return result.recordset[0];
+};
+
+// =====================================================
+// RECORD USER LOGOUT
+// =====================================================
+
+const recordUserLogout = async (LoginHistoryID, UserID) => {
+
+  const parsedLoginHistoryID = Number(LoginHistoryID);
+  const parsedUserID = Number(UserID);
+
+  if (!Number.isInteger(parsedLoginHistoryID) || parsedLoginHistoryID <= 0) {
+    throw new Error("Valid LoginHistoryID is required");
+  }
+  if (!Number.isInteger(parsedUserID) || parsedUserID <= 0) {
+    throw new Error("Valid UserID is required");
+  }
+
+  const pool = await connectDB();
+  const result = await pool.request()
+    .input("LoginHistoryID", sql.Int, parsedLoginHistoryID)
+    .input("UserID", sql.Int, parsedUserID)
+    .query(`
+      UPDATE dbo.UserLoginHistory
+      SET LogoutDate = GETDATE()
+      OUTPUT
+        INSERTED.LoginHistoryID,
+        INSERTED.UserID,
+        INSERTED.LoginDate,
+        INSERTED.LogoutDate
+      WHERE LoginHistoryID = @LoginHistoryID
+        AND UserID = @UserID
+        AND LogoutDate IS NULL
+    `);
+
+  return result.recordset[0] || null;
+};
 
 // =====================================================
 // EXPORT
@@ -486,4 +565,6 @@ export {
   createUser,
   updateUser,
   deleteUser,
+  recordUserLogin,
+  recordUserLogout,
 };

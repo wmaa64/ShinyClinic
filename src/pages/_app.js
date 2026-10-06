@@ -16,6 +16,7 @@ import "../styles/doctorPulses.css";
 import "../styles/doctorRevenue.css";
 import "../styles/offers.css";
 import "../styles/doctorRevenuePercentages.css";
+import "../styles/offerSubscriptionReport.css";
 
 
 import "../styles/index.scss";  /* main styles */

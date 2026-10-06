@@ -1,0 +1,113 @@
+.offer-subscription-report-page {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 70vh;
+  padding: 22px;
+  background: #f5f7fa;
+  color: #1f2937;
+}
+
+.offer-subscription-report-container { width: 100%; max-width: 1500px; margin: 0 auto; }
+.offer-subscription-report-header { margin-bottom: 20px; }
+.offer-subscription-report-header h1 { margin: 0; font-size: 26px; font-weight: 700; }
+.offer-subscription-report-header p { margin: 7px 0 0; color: #64748b; font-size: 14px; }
+
+.offer-subscription-report-section {
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 7px rgb(15 23 42 / 4%);
+}
+.offer-subscription-report-section h2 { margin: 0 0 15px; font-size: 18px; }
+.offer-report-patient-search,
+.offer-report-date-form { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 11px; }
+.offer-report-patient-search input,
+.offer-report-date-form input {
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #1f2937;
+  font: inherit;
+  outline: none;
+}
+.offer-report-patient-search input { flex: 1 1 320px; }
+.offer-report-date-form label { display: flex; flex: 1 1 190px; flex-direction: column; gap: 6px; }
+.offer-report-date-form label span { color: #475569; font-size: 13px; font-weight: 600; }
+.offer-report-patient-search input:focus,
+.offer-report-date-form input:focus { border-color: #2563eb; }
+.offer-report-patient-search button,
+.offer-report-date-form button,
+.offer-report-secondary-button {
+  min-height: 42px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.offer-report-patient-search button:hover,
+.offer-report-date-form button:hover { background: #1d4ed8; }
+.offer-report-secondary-button { background: #64748b; }
+.offer-report-secondary-button:hover { background: #475569; }
+.offer-report-patient-search button:disabled,
+.offer-report-date-form button:disabled { cursor: wait; opacity: .6; }
+
+.offer-report-patient-results { max-height: 300px; margin-top: 10px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 7px; }
+.offer-report-patient-result {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 1px solid #edf0f4;
+  background: #fff;
+  color: #475569;
+  text-align: start;
+  cursor: pointer;
+}
+.offer-report-patient-result:last-child { border-bottom: 0; }
+.offer-report-patient-result:hover { background: #f8fafc; }
+.offer-report-patient-result strong { color: #1f2937; }
+.offer-report-selected-patient { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 15px; border: 1px solid #dbeafe; border-radius: 7px; background: #eff6ff; }
+.offer-report-selected-patient > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; color: #475569; font-size: 13px; }
+.offer-report-selected-patient strong { color: #1f2937; font-size: 15px; }
+
+.offer-report-results { padding: 0; overflow: hidden; }
+.offer-report-results-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 19px; border-bottom: 1px solid #e2e8f0; }
+.offer-report-results-heading h2 { margin: 0; }
+.offer-report-results-heading p { margin: 5px 0 0; color: #64748b; font-size: 13px; }
+.offer-report-results-heading > span { padding: 6px 11px; border-radius: 20px; background: #f1f5f9; color: #475569; font-size: 13px; white-space: nowrap; }
+.offer-report-table-wrap { width: 100%; overflow-x: auto; }
+.offer-report-table { width: 100%; min-width: 1050px; border-collapse: collapse; }
+.offer-report-table th,
+.offer-report-table td { padding: 11px 12px; border-bottom: 1px solid #edf0f4; text-align: start; white-space: nowrap; }
+.offer-report-table th { background: #f8fafc; color: #475569; font-size: 12px; font-weight: 700; }
+.offer-report-table td { color: #334155; font-size: 13px; }
+.offer-report-table tbody tr:hover { background: #f8fafc; }
+.offer-report-status { display: inline-block; padding: 5px 9px; border-radius: 15px; background: #f1f5f9; color: #475569; font-size: 12px; font-weight: 600; }
+.offer-report-status-active { background: #dcfce7; color: #15803d; }
+.offer-report-status-completed { background: #dbeafe; color: #1d4ed8; }
+.offer-report-status-cancelled { background: #fee2e2; color: #b91c1c; }
+.offer-report-empty { padding: 28px 16px; color: #718096; text-align: center; }
+
+@media (max-width: 700px) {
+  .offer-subscription-report-page { padding: 14px; }
+  .offer-subscription-report-header h1 { font-size: 22px; }
+  .offer-report-selected-patient { align-items: flex-start; flex-direction: column; }
+  .offer-report-selected-patient > div { flex-direction: column; align-items: flex-start; }
+  .offer-report-patient-search button,
+  .offer-report-date-form button { flex: 1 1 100%; }
+  .offer-report-results-heading { align-items: flex-start; flex-direction: column; }
+}

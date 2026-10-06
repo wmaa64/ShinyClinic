@@ -111,12 +111,28 @@ const NavBar = () => {
         // -------------------------------------------------
 
         {
-            type: "link",
+            type: "menu",
             name: "sessions",
-            href: "/receptionSessions",
             labelEn: "Sessions",
             labelAr: "الجلسات",
             roleIDs: [1,3],
+
+            children: [
+                {
+                    href: "/receptionSessions",
+                    labelEn: "Sessions Registration",
+                    labelAr: "تسجيل الجلسات",
+                    roleIDs: [1,3],
+                },
+
+                {
+                    href: "/sessionDue",
+                    labelEn: "Sessions Payments",
+                    labelAr: " مدفوعات الجلسات",
+                    roleIDs: [1,3],
+                },
+
+            ]
         },
 
         // -------------------------------------------------
@@ -139,26 +155,13 @@ const NavBar = () => {
                 },
 
                 {
-                    href: "/",
+                    href: "/offerSubscriptionReport",
                     labelEn: "Patient Offers",
                     labelAr: "عروض مريض",
                     roleIDs: [1,9],
                 },
 
             ]
-        },
-
-        // -------------------------------------------------
-        // PAYMENTS
-        // -------------------------------------------------
-
-        {
-            type: "link",
-            name: "payments",
-            href: "/sessionDue",
-            labelEn: "Payments",
-            labelAr: "المدفوعات",
-            roleIDs: [1,3],
         },
 
         // -------------------------------------------------
