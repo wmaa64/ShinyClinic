@@ -76,7 +76,7 @@ const NavBar = () => {
             href: "/dashboard",
             labelEn: "DashBoard",
             labelAr: "لوحة المعلومات",
-            roleIDs: [1,2,3,9],
+            roleIDs: [1,2,3,9, 10],
         },
 
 
@@ -90,7 +90,7 @@ const NavBar = () => {
             href: "/patients",
             labelEn: "Patients",
             labelAr: "المرضى",
-            roleIDs: [1,2,3],
+            roleIDs: [1,2,3, 10],
         },
 
         // -------------------------------------------------
@@ -103,7 +103,7 @@ const NavBar = () => {
             href: "/appointments",
             labelEn: "Appointments",
             labelAr: "الحجوزات",
-            roleIDs: [1,3],
+            roleIDs: [1,3, 10],
         },
 
         // -------------------------------------------------
@@ -115,21 +115,21 @@ const NavBar = () => {
             name: "sessions",
             labelEn: "Sessions",
             labelAr: "الجلسات",
-            roleIDs: [1,3],
+            roleIDs: [1,3, 10],
 
             children: [
                 {
                     href: "/receptionSessions",
                     labelEn: "Sessions Registration",
                     labelAr: "تسجيل الجلسات",
-                    roleIDs: [1,3],
+                    roleIDs: [1,3, 10],
                 },
 
                 {
                     href: "/sessionDue",
                     labelEn: "Sessions Payments",
                     labelAr: " مدفوعات الجلسات",
-                    roleIDs: [1,3],
+                    roleIDs: [1,3, 10],
                 },
 
             ]
@@ -144,21 +144,21 @@ const NavBar = () => {
             name: "offers",
             labelEn: "Offers",
             labelAr: "العروض",
-            roleIDs: [1,3,9],
+            roleIDs: [1,3,9, 10],
 
             children: [
                 {
                     href: "/offerSubscriptions",
                     labelEn: "Subscriptions",
                     labelAr: "الاشتراكات",
-                    roleIDs: [1,3,9],
+                    roleIDs: [1,3,9, 10],
                 },
 
                 {
                     href: "/offerSubscriptionReport",
                     labelEn: "Patient Offers",
                     labelAr: "عروض مريض",
-                    roleIDs: [1,9],
+                    roleIDs: [1,9, 10],
                 },
 
             ]
@@ -173,21 +173,21 @@ const NavBar = () => {
             name: "queries",
             labelEn: "Queries",
             labelAr: "الاستعلامات",
-            roleIDs: [1,2,3,9],
+            roleIDs: [1,2,3,9, 10],
 
             children: [
                 {
                     href: "/revenue",
                     labelEn: "Revenue for Period",
                     labelAr: "إيرادات عن فترة",
-                    roleIDs: [1,9],
+                    roleIDs: [1,9, 10],
                 },
 
                 {
                     href: "/doctorRevenue",
                     labelEn: "Doctor Revenue",
                     labelAr: "إيرادات الطبيب",
-                    roleIDs: [1,9],
+                    roleIDs: [1,9, 10],
                 },
 
             ]
@@ -225,42 +225,42 @@ const NavBar = () => {
                     href: "/offers",
                     labelEn: "Offers",
                     labelAr: "العروض",
-                    roleIDs: [1],
+                    roleIDs: [1, 10],
                 },
 
                 {
                     href: "/services",
                     labelEn: "Services",
                     labelAr: "الخدمات",
-                    roleIDs: [1],
+                    roleIDs: [1, 10],
                 },
 
                 {
                     href: "/doctorRevenuePercentages",
                     labelEn: "Doctor Revenue Percentages",
                     labelAr: "نسب إيرادات الطبيب",
-                    roleIDs: [1],
+                    roleIDs: [1, 10],
                 },
 
                 {
                     href: "/devices",
                     labelEn: "Devices",
                     labelAr: "الأجهزة",
-                    roleIDs: [1],
+                    roleIDs: [1, 10],
                 },
 
                 {
                     href: "/treatmentAreas",
                     labelEn: "TreatmentAreas",
                     labelAr: "مناطق علاجية",
-                    roleIDs: [1],
+                    roleIDs: [1, 10],
                 },
 
                 {
                     href: "/laserTypes",
                     labelEn: "LaserTypes",
                     labelAr: "نواع الليزر",
-                    roleIDs: [1],
+                    roleIDs: [1, 10],
                 },
 
 
