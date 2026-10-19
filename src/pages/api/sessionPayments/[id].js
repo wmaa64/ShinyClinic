@@ -1,7 +1,7 @@
 import {
   updateSessionPayment,
   deleteSessionPayment,
-} from "../../../../controllers/sessionPaymentController";
+} from "../../../../controllers/sessionPaymentControllerOld";
 
 export default async function handler(req, res) {
   try {

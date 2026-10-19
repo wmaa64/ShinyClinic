@@ -165,6 +165,55 @@ const NavBar = () => {
         },
 
         // -------------------------------------------------
+        // STORE
+        // -------------------------------------------------
+
+        {
+            type: "menu",
+            name: "store",
+            labelEn: "Store",
+            labelAr: "المخزن",
+            roleIDs: [1,2,3,9, 10],
+
+            children: [
+                {
+                    href: "/store",
+                    labelEn: "Store",
+                    labelAr: "المخزون",
+                    roleIDs: [1,3,9, 10],
+                },
+
+                {
+                    href: "/supplies",
+                    labelEn: "Supplies",
+                    labelAr: "المستلزمات",
+                    roleIDs: [1,3,9, 10],
+                },
+
+                {
+                    href: "/supplyUnits",
+                    labelEn: "Supply Units",
+                    labelAr: "وحدات المستلزمات",
+                    roleIDs: [1,3,9, 10],
+                },
+
+            ]
+        },
+
+        // -------------------------------------------------
+        // APPOINTMENTS
+        // -------------------------------------------------
+
+        {
+            type: "link",
+            name: "moneySafe",
+            href: "/moneySafe",
+            labelEn: "Money Safe",
+            labelAr: "الخزنة المالية",
+            roleIDs: [1,3,9, 10],
+        },
+
+        // -------------------------------------------------
         // QUERIES
         // -------------------------------------------------
 

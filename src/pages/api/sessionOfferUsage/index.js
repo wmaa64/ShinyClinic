@@ -1,4 +1,4 @@
-import { getSessionOfferUsages } from "../../../../controllers/offerSubscriptionController";
+import { getSessionOfferUsages } from "../../../../controllers/offerSubscriptionControllerOls";
 
 // Return usage rows for the requested session.
 export default async function handler(req, res) {

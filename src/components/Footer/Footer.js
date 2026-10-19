@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 
 const Footer = () => {
     const { i18n } = useTranslation();
-    const { showCart } = useStateContext();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

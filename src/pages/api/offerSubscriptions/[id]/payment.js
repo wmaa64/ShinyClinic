@@ -3,7 +3,7 @@ import {
   getOfferSubscriptionPayments,
   updateOfferSubscriptionPayment,
   deleteOfferSubscriptionPayment,
-} from "../../../../../controllers/offerSubscriptionController";
+} from "../../../../../controllers/offerSubscriptionControllerOls";
 
 const getErrorStatus = (error) => {
   const message = error.message || "";

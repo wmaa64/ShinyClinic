@@ -1,0 +1,104 @@
+.supply-units-page {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 70vh;
+  padding: 24px;
+  color: #1f2937;
+  background: #f5f7fa;
+}
+
+.supply-units-page *,
+.supply-units-page *::before,
+.supply-units-page *::after { box-sizing: border-box; }
+
+.supply-units-header,
+.supply-units-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.supply-units-header { margin-bottom: 22px; }
+.supply-units-header h1 { margin: 0; color: #111827; font-size: 27px; font-weight: 700; }
+.supply-units-header p,
+.supply-units-panel-heading p { margin: 6px 0 0; color: #64748b; font-size: 13px; line-height: 1.6; }
+
+.supply-units-panel {
+  min-width: 0;
+  margin-bottom: 22px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+
+.supply-units-panel-heading { margin-bottom: 18px; }
+.supply-units-panel-heading h2 { margin: 0; color: #1f2937; font-size: 18px; font-weight: 700; }
+
+.supply-units-form { display: flex; align-items: flex-end; gap: 12px; }
+.supply-units-field { display: flex; flex: 1 1 280px; flex-direction: column; gap: 7px; }
+.supply-units-field span { color: #374151; font-size: 13px; font-weight: 600; }
+.supply-units-field input,
+.supply-units-search {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #fff;
+  color: #111827;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.supply-units-field input:focus,
+.supply-units-search:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgb(37 99 235 / 10%); }
+.supply-units-search { width: min(100%, 300px); }
+
+.supply-units-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.supply-units-button:disabled { cursor: not-allowed; opacity: .6; }
+.supply-units-button.primary { border-color: #2563eb; background: #2563eb; color: #fff; }
+.supply-units-button.primary:hover:not(:disabled) { border-color: #1d4ed8; background: #1d4ed8; }
+.supply-units-button.secondary { border-color: #cbd5e1; background: #fff; color: #374151; }
+.supply-units-button.secondary:hover:not(:disabled) { background: #f8fafc; }
+.supply-units-button.danger { border-color: #fecaca; background: #fff; color: #b91c1c; }
+.supply-units-button.danger:hover:not(:disabled) { background: #fef2f2; }
+.supply-units-button.small { min-height: 34px; padding: 6px 11px; }
+
+.supply-units-table-wrap { width: 100%; overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 8px; }
+.supply-units-table { width: 100%; min-width: 650px; border-collapse: collapse; }
+.supply-units-table th,
+.supply-units-table td { padding: 11px 13px; border-bottom: 1px solid #edf0f4; text-align: start; white-space: nowrap; }
+.supply-units-table th { background: #f8fafc; color: #475569; font-size: 12px; font-weight: 700; }
+.supply-units-table td { color: #334155; font-size: 13px; }
+.supply-units-table tbody tr:last-child td { border-bottom: 0; }
+.supply-units-table tbody tr:hover { background: #fafcff; }
+.supply-units-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+.supply-units-status { display: inline-block; padding: 5px 9px; border-radius: 15px; font-size: 12px; font-weight: 600; }
+.supply-units-status.active { background: #dcfce7; color: #15803d; }
+.supply-units-status.inactive { background: #f1f5f9; color: #64748b; }
+.supply-units-empty { padding: 30px 16px; color: #718096; text-align: center; }
+
+@media (max-width: 680px) {
+  .supply-units-page { padding: 14px; }
+  .supply-units-header,
+  .supply-units-panel-heading { align-items: stretch; flex-direction: column; }
+  .supply-units-form { align-items: stretch; flex-direction: column; }
+  .supply-units-form > .supply-units-button,
+  .supply-units-search { width: 100%; }
+}

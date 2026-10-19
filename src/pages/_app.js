@@ -17,6 +17,10 @@ import "../styles/doctorRevenue.css";
 import "../styles/offers.css";
 import "../styles/doctorRevenuePercentages.css";
 import "../styles/offerSubscriptionReport.css";
+import "../styles/store.css";
+import "../styles/supplyUnits.css";
+import "../styles/supplies.css";
+import "../styles/moneySafe.css";
 
 
 import "../styles/index.scss";  /* main styles */

@@ -6,7 +6,6 @@ import { useStateContext } from "../../context/StateContext";
 import { AiOutlineShopping } from "react-icons/ai";
 import i18n from '../i18n';
 import Link from "next/link";
-import Cart from './Cart';
 import { useRouter } from 'next/router';
 
 const Header = () => {

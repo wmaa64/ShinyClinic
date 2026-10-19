@@ -1530,6 +1530,61 @@
 
 }
 
+/* Supply picker layout and row controls. */
+.sessions-supplies-modal {
+  width: min(100%, 720px);
+}
+
+.sessions-supplies-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.sessions-supplies-table {
+  min-width: 620px;
+}
+
+.sessions-supplies-table .sessions-supplies-empty-cell {
+  padding: 24px;
+  color: #64748b;
+  text-align: center;
+}
+
+.sessions-supplies-modal .sessions-modal-header > div {
+  min-width: 0;
+}
+
+.sessions-supplies-modal .sessions-modal-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.sessions-supplies-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 160px;
+  max-height: min(55vh, 480px);
+  padding-top: 12px;
+}
+
+.sessions-supplies-error {
+  margin: 10px 20px 0;
+}
+
+@media (max-width: 600px) {
+  .sessions-supplies-modal-body {
+    max-height: 52vh;
+  }
+
+  .sessions-supplies-modal .sessions-modal-footer {
+    flex-wrap: wrap;
+  }
+}
+
 
 /* =====================================================
    TABLET

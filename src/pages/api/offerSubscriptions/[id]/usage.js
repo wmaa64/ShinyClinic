@@ -1,6 +1,6 @@
 import {
   consumeOfferSubscription,
-} from "../../../../../controllers/offerSubscriptionController";
+} from "../../../../../controllers/offerSubscriptionControllerOls";
 
 
 // =====================================================

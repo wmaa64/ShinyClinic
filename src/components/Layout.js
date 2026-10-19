@@ -16,7 +16,8 @@ const Layout = ({ children }) => {
 
     const router = useRouter();
 
-    const isRTL = i18n.language === "ar"; // true if Arabic
+    // Use optional chaining (?) to prevent crashing, and double-check
+    const isRTL = i18n?.language?.startsWith("ar") || false; 
 
     useEffect(() => {
         if (!userInfo) {

@@ -21,7 +21,12 @@ export const getRevenue = async (fromDate, toDate) => {
     .input("FromDate", sql.Date, fromDate)
     .input("ToDate", sql.Date, toDate);
 
-  const [sessionResult, offerResult] = await Promise.all([
+  // Sum supply costs for supplies used in sessions in the period.
+  const suppliesRequest = pool.request()
+    .input("FromDate", sql.Date, fromDate)
+    .input("ToDate", sql.Date, toDate);
+
+  const [sessionResult, offerResult, suppliesResult] = await Promise.all([
     sessionRequest.query(`
       SELECT
         ISNULL(SUM(SessionTotals.TotalDue), 0) AS TotalDue,
@@ -79,10 +84,26 @@ export const getRevenue = async (fromDate, toDate) => {
           BETWEEN @FromDate AND @ToDate
       ) OfferTotals
     `),
+
+      suppliesRequest.query(`
+      SELECT
+        ISNULL(SUM(LineCost), 0) AS TotalSuppliesCost
+      FROM dbo.SessionSupplies ss
+        LEFT JOIN dbo.LaserSessions LS 
+          ON ss.SessionID = LS.SessionID
+      WHERE 
+        CAST(LS.SessionDate AS DATE)
+          BETWEEN @FromDate AND @ToDate
+
+    `),
+
+
   ]);
+
 
   return {
     sessions: sessionResult.recordset[0],
     offers: offerResult.recordset[0],
+    suppliesCost: suppliesResult.recordset[0].TotalSuppliesCost || 0,
   };
 };

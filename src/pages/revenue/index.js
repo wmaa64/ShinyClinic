@@ -32,6 +32,8 @@ const Revenue = () => {
   const [toDate, setToDate] = useState(getTodayDate());
   const [sessionTotals, setSessionTotals] = useState(EMPTY_TOTALS);
   const [offerTotals, setOfferTotals] = useState(EMPTY_TOTALS);
+  const [suppliesCost, setSuppliesCost] = useState(0);
+
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
@@ -58,9 +60,7 @@ const Revenue = () => {
     try {
       setLoading(true);
 
-      const response = await fetch(
-        `/api/revenue?fromDate=${fromDate}&toDate=${toDate}`
-      );
+      const response = await fetch(`/api/revenue?fromDate=${fromDate}&toDate=${toDate}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -69,12 +69,16 @@ const Revenue = () => {
 
       setSessionTotals(data.sessions || EMPTY_TOTALS);
       setOfferTotals(data.offers || EMPTY_TOTALS);
+      setSuppliesCost(data.suppliesCost || 0);
+      
       setSearched(true);
     } catch (error) {
       console.error("Load revenue error:", error);
       toast.error(error.message || "Failed to load revenue");
       setSessionTotals(EMPTY_TOTALS);
       setOfferTotals(EMPTY_TOTALS);
+      setSuppliesCost(0);
+
     } finally {
       setLoading(false);
     }
@@ -85,7 +89,13 @@ const Revenue = () => {
     loadRevenue();
   }, []);
 
-  const formatMoney = (value) => Number(value || 0).toLocaleString("en-US", {
+  const formatMoney = (value) => 
+    
+    isRTL? Number(value || 0).toLocaleString("ar-EG", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }) :
+    Number(value || 0).toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -111,6 +121,7 @@ const Revenue = () => {
 
   return (
     <div className="revenue-page">
+      
       <div className="revenue-header">
         <h1>{isRTL ? "تقرير الإيرادات" : "Revenue Report"}</h1>
       </div>
@@ -168,6 +179,15 @@ const Revenue = () => {
             <h2>{isRTL ? "إيرادات اشتراكات العروض" : "Offer Subscription Revenue"}</h2>
             {renderTotals(offerTotals)}
           </section>
+
+          {/* Supplies cost section */}
+          <section className="revenue-section">
+            <h2>{isRTL ? "تكاليف المواد" : "Supplies Cost"}</h2>
+            <div className="revenue-totals">
+              <strong>{formatMoney(suppliesCost)}</strong>
+            </div>
+          </section>
+
         </>
       ) : null}
     </div>

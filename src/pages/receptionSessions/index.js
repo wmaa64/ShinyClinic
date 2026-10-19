@@ -79,6 +79,18 @@ const ReceptionSessionsPage  = () => {
   const [editingOfferUsageID, setEditingOfferUsageID] = useState(null);
   const [offerUsageEditForm, setOfferUsageEditForm] = useState({ PulsesNo: "", Notes: "" });
 
+  // SUPPLY CATALOG AND CURRENT SESSION CONSUMPTION
+  const [supplies, setSupplies] = useState([]);
+  const [sessionSupplies, setSessionSupplies] = useState([]);
+  const [suppliesLoading, setSuppliesLoading] = useState(false);
+  const [sessionSuppliesLoading, setSessionSuppliesLoading] = useState(false);
+  const [savingSessionSupplies, setSavingSessionSupplies] = useState(false);
+  const [showSuppliesModal, setShowSuppliesModal] = useState(false);
+  const [supplySearch, setSupplySearch] = useState("");
+  const [selectedSupplyIDs, setSelectedSupplyIDs] = useState([]);
+  const [supplyError, setSupplyError] = useState("");
+  const [supplyMessage, setSupplyMessage] = useState("");
+
   // is Doctor logged in Case
   const [IsDoctorCase, setIsDoctorCase] =useState(true);
 
@@ -94,6 +106,8 @@ const ReceptionSessionsPage  = () => {
     loadDevices();
 
     loadServices();
+
+    loadSupplies();
 
     setSessionDate(getTodayDate());
 
@@ -297,6 +311,180 @@ const ReceptionSessionsPage  = () => {
     return usages;
   };
 
+  // Load active supplies and their current stock balances for the selector.
+  const loadSupplies = async () => {
+    try {
+      setSuppliesLoading(true);
+      const response = await fetch("/api/supplies");
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Failed to load supplies.");
+      setSupplies(Array.isArray(data.supplies) ? data.supplies : []);
+    } catch (loadError) {
+      console.error("Load supplies error:", loadError);
+      setSupplyError(loadError.message || "Failed to load supplies.");
+    } finally {
+      setSuppliesLoading(false);
+    }
+  };
+
+  // Load supplies already consumed in the current session.
+  const loadSessionSupplies = async (sessionID) => {
+    if (!sessionID) {
+      setSessionSupplies([]);
+      return [];
+    }
+
+    try {
+      setSessionSuppliesLoading(true);
+      const response = await fetch(`/api/sessionSupplies?sessionID=${sessionID}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Failed to load session supplies.");
+      const rows = Array.isArray(data.supplies) ? data.supplies.map((item) => ({
+        ...item,
+        OriginalQuantity: Number(item.Quantity || 0),
+      })) : [];
+      setSessionSupplies(rows);
+      return rows;
+    } catch (loadError) {
+      console.error("Load session supplies error:", loadError);
+      setSupplyError(loadError.message || "Failed to load session supplies.");
+      return [];
+    } finally {
+      setSessionSuppliesLoading(false);
+    }
+  };
+
+  // Open the supply picker to add items to the editable session list.
+  const handleOpenSuppliesModal = () => {
+    setSupplyError("");
+    setSupplySearch("");
+    setSelectedSupplyIDs([]);
+    setShowSuppliesModal(true);
+  };
+
+  const handleCloseSuppliesModal = () => {
+    if (savingSessionSupplies) return;
+    setShowSuppliesModal(false);
+    setSupplySearch("");
+    setSelectedSupplyIDs([]);
+  };
+
+  // Toggle one item in the supply picker, like the services picker.
+  const handleToggleSupply = (supplyID) => {
+    setSelectedSupplyIDs((current) => current.some((id) => Number(id) === Number(supplyID))
+      ? current.filter((id) => Number(id) !== Number(supplyID))
+      : [...current, supplyID]);
+  };
+
+  // Add picked items to the editable table without saving stock yet.
+  const handleAddSelectedSupplies = () => {
+    const selectedItems = supplies.filter((supply) =>
+      selectedSupplyIDs.some((id) => Number(id) === Number(supply.SupplyID))
+    );
+    const existingIDs = new Set(sessionSupplies.map((item) => Number(item.SupplyID)));
+    const newItems = selectedItems
+      .filter((supply) => !existingIDs.has(Number(supply.SupplyID)))
+      .map((supply) => ({
+        _rowId: `new-${Date.now()}-${supply.SupplyID}`,
+        SupplyID: supply.SupplyID,
+        SupplyName: supply.SupplyName,
+        UnitName: supply.UnitName,
+        Quantity: 1,
+        UnitCostAtUse: Number(supply.CostPrice || 0),
+        TotalCost: Number(supply.CostPrice || 0),
+        QuantityOnHand: Number(supply.QuantityOnHand || 0),
+        IsNew: true,
+      }));
+
+    setSessionSupplies((current) => [...current, ...newItems]);
+    setSelectedSupplyIDs([]);
+    setShowSuppliesModal(false);
+  };
+
+  const handleSupplyQuantityChange = (rowID, value) => {
+    const quantity = value === "" ? "" : Number(value);
+    setSessionSupplies((current) => current.map((item) =>
+      String(item._rowId || item.SessionSupplyID) === String(rowID)
+        ? { ...item, Quantity: quantity }
+        : item
+    ));
+  };
+
+  const handleRemoveSessionSupply = (rowID) => {
+    setSessionSupplies((current) => current.filter((item) =>
+      String(item._rowId || item.SessionSupplyID) !== String(rowID)
+    ));
+  };
+
+  // Save the complete table; the API replaces the previous saved set atomically.
+  const handleSaveSessionSupplies = async () => {
+    if (!createdSession?.SessionID) {
+      setSupplyError(isRTL ? "سجل الجلسة أولاً." : "Register the session first.");
+      return;
+    }
+
+    const selectedItems = sessionSupplies.map((item) => ({
+      SupplyID: Number(item.SupplyID),
+      Quantity: Number(item.Quantity),
+    }));
+
+    for (const item of selectedItems) {
+      const supply = supplies.find((row) => Number(row.SupplyID) === item.SupplyID);
+      if (!Number.isFinite(item.Quantity) || item.Quantity <= 0) {
+        setSupplyError(isRTL ? "يجب أن تكون الكمية أكبر من صفر." : "Each quantity must be greater than zero.");
+        return;
+      }
+      const alreadyDeducted = sessionSupplies
+        .filter((row) => !row.IsNew && Number(row.SupplyID) === item.SupplyID)
+        .reduce((total, row) => total + Number(row.OriginalQuantity ?? row.Quantity ?? 0), 0);
+      if (item.Quantity > Number(supply?.QuantityOnHand || 0) + alreadyDeducted) {
+        setSupplyError(isRTL ? `المخزون المتاح غير كافٍ لـ ${supply?.SupplyName || "المستلزم"}.` : `Not enough stock for ${supply?.SupplyName || "the selected supply"}.`);
+        return;
+      }
+    }
+
+    try {
+      setSavingSessionSupplies(true);
+      setSupplyError("");
+      const response = await fetch("/api/sessionSupplies", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          SessionID: Number(createdSession.SessionID),
+          UserID: userInfo?.UserID ? Number(userInfo.UserID) : null,
+          Supplies: selectedItems,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Failed to save session supplies.");
+
+      setSupplyMessage(isRTL ? "تم حفظ المستلزمات وتحديث رصيد المخزن." : "Session supplies saved and store stock updated.");
+      setSessionSupplies((Array.isArray(data.supplies) ? data.supplies : []).map((item) => ({
+        ...item,
+        OriginalQuantity: Number(item.Quantity || 0),
+        _rowId: `existing-${item.SessionSupplyID}`,
+      })));
+      await Promise.all([
+        loadSessionSupplies(createdSession.SessionID),
+        loadSupplies(),
+      ]);
+    } catch (saveError) {
+      console.error("Save session supplies error:", saveError);
+      setSupplyError(saveError.message || "Failed to save session supplies.");
+    } finally {
+      setSavingSessionSupplies(false);
+    }
+  };
+
+  const handleSupplySelectionIsAlreadyAdded = (supplyID) =>
+    sessionSupplies.some((item) => Number(item.SupplyID) === Number(supplyID));
+
+  const filteredSuppliesForSession = supplies.filter((supply) =>
+    `${supply.SupplyName || ""} ${supply.UnitName || ""}`
+      .toLocaleLowerCase()
+      .includes(supplySearch.trim().toLocaleLowerCase())
+  );
+
   // Load current active subscriptions for the patient, excluding empty balances.
   const loadPatientActiveOffers = async (patientID) => {
     if (!patientID) {
@@ -333,6 +521,7 @@ const handleSelectAppointment = async (appointmentID) => {
   // CLEAR PREVIOUS DATA
   setCreatedSession(null);
   setSessionServices([]);
+  setSessionSupplies([]);
   setPatientOfferSubscriptions([]);
   setSessionOfferUsages([]);
   setSelectedOfferSubscription(null);
@@ -341,6 +530,9 @@ const handleSelectAppointment = async (appointmentID) => {
   setOfferUsageMessage("");
   setOfferError("");
   setEditingOfferUsageID(null);
+  setSupplyError("");
+  setSupplyMessage("");
+  setShowSuppliesModal(false);
   setError("");
 
   if (!appointment) {
@@ -375,6 +567,7 @@ const handleSelectAppointment = async (appointmentID) => {
     if (!data) {
       setCreatedSession(null);
       setSessionOfferUsages([]);
+      setSessionSupplies([]);
       setIsDoctorCase(true);
       return;
     }
@@ -393,6 +586,7 @@ const handleSelectAppointment = async (appointmentID) => {
 
     // LOAD OFFER USAGE ALREADY RECORDED FOR THIS SESSION.
     await loadSessionOfferUsages(data.SessionID);
+    await loadSessionSupplies(data.SessionID);
 
   }
   catch (error) {
@@ -812,6 +1006,7 @@ const handleCreateSession = async () => {
     // LOAD SERVICES
     await loadSessionServices(data.SessionID, data.PatientID);
     await loadSessionOfferUsages(data.SessionID);
+    await loadSessionSupplies(data.SessionID);
 
   }
   catch (error) {
@@ -2016,6 +2211,149 @@ const filteredServices = services.filter(service =>
       )}
 
     </section>
+
+    {/* =================================================
+        SESSION SUPPLIES
+        Saving usage also deducts inventory and records a stock movement.
+    ================================================= */}
+    <section className="sessions-section sessions-supplies-section">
+      <div className="sessions-section-header">
+        <h2>{isRTL ? "مستلزمات الجلسة" : "Session Supplies"}</h2>
+        <span>{isRTL ? "الجلسة #" : "Session #"} {createdSession.SessionID}</span>
+      </div>
+
+      <div className="sessions-supplies-heading">
+        <p>
+          {isRTL
+            ? "أضف المستلزمات وعدّل الكميات أو أزلها، ثم احفظ القائمة لتحديث المخزون."
+            : "Add supplies, adjust quantities or remove rows, then save the list to update stock."}
+        </p>
+        <button
+          type="button"
+          className="sessions-add-services-button"
+          onClick={handleOpenSuppliesModal}
+          disabled={savingSessionSupplies || savingServices}
+        >
+          + {isRTL ? "إضافة مستلزمات" : "Add Supplies"}
+        </button>
+      </div>
+
+      {supplyMessage && <div className="sessions-supplies-success" role="status">{supplyMessage}</div>}
+      {supplyError && <div className="sessions-error sessions-supplies-error" role="alert">{supplyError}</div>}
+
+      {sessionSuppliesLoading ? (
+        <div className="sessions-loading">{isRTL ? "جارٍ تحميل مستلزمات الجلسة..." : "Loading session supplies..."}</div>
+      ) : (
+        <div className="sessions-supplies-table-wrapper">
+          <table className="sessions-services-table sessions-supplies-table">
+            <thead><tr>
+              <th>{isRTL ? "المستلزم" : "Supply"}</th>
+              <th>{isRTL ? "الكمية" : "Quantity"}</th>
+              <th>{isRTL ? "الوحدة" : "Unit"}</th>
+              <th>{isRTL ? "إجمالي التكلفة" : "Total Cost"}</th>
+              <th>{isRTL ? "الإجراء" : "Action"}</th>
+            </tr></thead>
+            <tbody>
+              {sessionSupplies.length === 0 ? (
+                <tr><td colSpan="5" className="sessions-supplies-empty-cell">{isRTL ? "لم تُضف مستلزمات لهذه الجلسة بعد." : "No supplies added to this session yet."}</td></tr>
+              ) : sessionSupplies.map((item) => {
+                const rowID = item._rowId || item.SessionSupplyID;
+                const cost = Number(item.UnitCostAtUse || 0);
+                const quantity = Number(item.Quantity || 0);
+                return (
+                  <tr key={rowID}>
+                    <td><strong>{item.SupplyName}</strong></td>
+                    <td><input type="number" min="0" step="1" value={item.Quantity} onChange={(event) => handleSupplyQuantityChange(rowID, event.target.value)} disabled={savingSessionSupplies} aria-label={isRTL ? `كمية ${item.SupplyName}` : `${item.SupplyName} quantity`} /></td>
+                    <td>{item.UnitName}</td>
+                    <td>{(cost * quantity).toFixed(2)} EGP</td>
+                    <td><button type="button" className="sessions-remove-service-button" onClick={() => handleRemoveSessionSupply(rowID)} disabled={savingSessionSupplies}>{isRTL ? "إزالة" : "Remove"}</button></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <div className="sessions-services-footer">
+        <button type="button" className="sessions-save-services-button" onClick={handleSaveSessionSupplies} disabled={savingSessionSupplies || sessionSuppliesLoading}>
+          {savingSessionSupplies ? (isRTL ? "جارٍ حفظ المستلزمات..." : "Saving Supplies...") : (isRTL ? "حفظ المستلزمات" : "Save Supplies")}
+        </button>
+      </div>
+    </section>
+
+    {/* Supply picker: select items here, then edit quantities in the session table. */}
+    {showSuppliesModal && (
+      <div className="sessions-modal-overlay" onMouseDown={(event) => {
+        if (event.target === event.currentTarget) handleCloseSuppliesModal();
+      }}>
+        <section
+          className="sessions-services-modal sessions-supplies-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="session-supplies-modal-title"
+        >
+          <header className="sessions-modal-header">
+            <div>
+              <h2 id="session-supplies-modal-title">{isRTL ? "اختر مستلزمات الجلسة" : "Select Session Supplies"}</h2>
+              <p>{selectedAppointment?.PatientName}</p>
+            </div>
+            <button type="button" className="sessions-modal-close" onClick={handleCloseSuppliesModal} disabled={savingSessionSupplies} aria-label={isRTL ? "إغلاق" : "Close"}>×</button>
+          </header>
+
+          <div className="sessions-modal-search">
+            <input
+              type="search"
+              value={supplySearch}
+              onChange={(event) => setSupplySearch(event.target.value)}
+              placeholder={isRTL ? "ابحث عن مستلزم..." : "Search supplies..."}
+              aria-label={isRTL ? "ابحث عن مستلزم" : "Search supplies"}
+            />
+          </div>
+
+          {supplyError && <div className="sessions-error sessions-supplies-error" role="alert">{supplyError}</div>}
+
+          <div className="sessions-modal-body sessions-supplies-modal-body">
+            {suppliesLoading ? (
+              <div className="sessions-loading">{isRTL ? "جارٍ تحميل المستلزمات..." : "Loading supplies..."}</div>
+            ) : filteredSuppliesForSession.length === 0 ? (
+              <div className="sessions-empty">{isRTL ? "لا توجد مستلزمات مطابقة." : "No matching supplies found."}</div>
+            ) : filteredSuppliesForSession.map((supply) => {
+              const available = Number(supply.QuantityOnHand || 0);
+              const alreadyAdded = handleSupplySelectionIsAlreadyAdded(supply.SupplyID);
+              const checked = selectedSupplyIDs.some((id) => Number(id) === Number(supply.SupplyID));
+              return (
+                <label className={"sessions-service-option " + (alreadyAdded ? "already-added" : "")} key={supply.SupplyID}>
+                  <input
+                    type="checkbox"
+                    checked={alreadyAdded || checked}
+                    onChange={() => handleToggleSupply(supply.SupplyID)}
+                    disabled={savingSessionSupplies || available <= 0 || alreadyAdded}
+                  />
+                  <span className="sessions-service-option-name">
+                    <strong>{supply.SupplyName}</strong>
+                    <span className="sessions-service-option-category">{supply.UnitName} · {isRTL ? "المتاح" : "Available"}: {available.toLocaleString()}</span>
+                  </span>
+                  {alreadyAdded && <span className="sessions-service-option-status">{isRTL ? "مضاف بالفعل" : "Already added"}</span>}
+                </label>
+              );
+            })}
+          </div>
+
+          <footer className="sessions-modal-footer">
+            <button type="button" className="sessions-modal-cancel" onClick={handleCloseSuppliesModal} disabled={savingSessionSupplies}>{isRTL ? "إلغاء" : "Cancel"}</button>
+            <button
+              type="button"
+              className="sessions-modal-add"
+              onClick={handleAddSelectedSupplies}
+              disabled={savingSessionSupplies || selectedSupplyIDs.length === 0}
+            >
+              {isRTL ? "إضافة المحدد" : "Add Selected"}
+            </button>
+          </footer>
+        </section>
+      </div>
+    )}
 
 
     {/* =================================================
