@@ -904,7 +904,7 @@ const handleAddSelectedServices = () => {
       Qty: 1,
       
       // Number of pulses actually used for this service
-      PulsesNo: 0,
+      ////PulsesNo: 0,
 
       Discount: 0,
       LineTotal: Number( service.DefaultPrice || 0 ),
@@ -1073,6 +1073,7 @@ const handleUnitPriceChange = (rowId, value) => {
 
 
 // UPDATE SERVICE PULSES
+/*
 const handlePulsesNoChange = (rowId, value) => {
 
   let pulsesNo = parseInt(value, 10);
@@ -1096,6 +1097,7 @@ const handlePulsesNoChange = (rowId, value) => {
     })
   );
 };
+*/
 
 // UPDATE SERVICE DISCOUNT // =====================================================
 const handleDiscountChange = (rowId, value) => {
@@ -1160,9 +1162,9 @@ const handleSaveServices = async () => {
 
           Qty: Number(service.Qty),
           
-          PulsesNo:  service.PulsesNo === undefined || service.PulsesNo === null || service.PulsesNo === ""
-              ? null
-              : Number(service.PulsesNo),
+          ////PulsesNo:  service.PulsesNo === undefined || service.PulsesNo === null || service.PulsesNo === ""
+          ////    ? null
+          ////    : Number(service.PulsesNo),
 
           UnitPrice: Number(service.UnitPrice),
 
@@ -1747,9 +1749,9 @@ const filteredServices = services.filter(service =>
                 {isRTL ? "الكمية" : "Qty"}
               </th>
 
-              <th>
+              {/*<th>
                 {isRTL ? "عدد النبضات" : "Pulses"}
-              </th>
+              </th>*/}
 
               <th>
                 {isRTL ? "سعر الوحدة" : "Unit Price"}
@@ -1818,7 +1820,7 @@ const filteredServices = services.filter(service =>
 
                     {/* PULSES NO */}
 
-                    <td>
+                    {/*<td>
                       <input
                         type="number"
                         min="0"
@@ -1833,6 +1835,7 @@ const filteredServices = services.filter(service =>
                         disabled={savingServices}
                       />
                     </td>
+                    */}
 
                   {/* UNIT PRICE */}
 

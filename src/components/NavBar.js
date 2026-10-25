@@ -3,7 +3,27 @@ import Link from "next/link";
 import { useStateContext } from "../../context/StateContext";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
-
+import {
+    LayoutDashboard,
+    Users,
+    CalendarDays,
+    Stethoscope,
+    Gift,
+    Package,
+    Wallet,
+    BarChart3,
+    Settings,
+    UserCog,
+    BriefcaseBusiness,
+    Tags,
+    Wrench,
+    Percent,
+    Monitor,
+    MapPinned,
+    ScanLine,
+    ClipboardList,
+    CreditCard,
+} from "lucide-react";
 
 const NavBar = () => {
 
@@ -76,6 +96,7 @@ const NavBar = () => {
             href: "/dashboard",
             labelEn: "DashBoard",
             labelAr: "لوحة المعلومات",
+            icon: LayoutDashboard,
             roleIDs: [1,2,3,9, 10],
         },
 
@@ -90,6 +111,7 @@ const NavBar = () => {
             href: "/patients",
             labelEn: "Patients",
             labelAr: "المرضى",
+            icon: Users,
             roleIDs: [1,2,3, 10],
         },
 
@@ -103,6 +125,7 @@ const NavBar = () => {
             href: "/appointments",
             labelEn: "Appointments",
             labelAr: "الحجوزات",
+            icon: CalendarDays,
             roleIDs: [1,3, 10],
         },
 
@@ -115,6 +138,7 @@ const NavBar = () => {
             name: "sessions",
             labelEn: "Sessions",
             labelAr: "الجلسات",
+            icon: Stethoscope,
             roleIDs: [1,3, 10],
 
             children: [
@@ -122,6 +146,7 @@ const NavBar = () => {
                     href: "/receptionSessions",
                     labelEn: "Sessions Registration",
                     labelAr: "تسجيل الجلسات",
+                    icon: ClipboardList,
                     roleIDs: [1,3, 10],
                 },
 
@@ -129,6 +154,7 @@ const NavBar = () => {
                     href: "/sessionDue",
                     labelEn: "Sessions Payments",
                     labelAr: " مدفوعات الجلسات",
+                    icon: CreditCard,
                     roleIDs: [1,3, 10],
                 },
 
@@ -144,6 +170,7 @@ const NavBar = () => {
             name: "offers",
             labelEn: "Offers",
             labelAr: "العروض",
+            icon: Gift,
             roleIDs: [1,3,9, 10],
 
             children: [
@@ -151,6 +178,7 @@ const NavBar = () => {
                     href: "/offerSubscriptions",
                     labelEn: "Subscriptions",
                     labelAr: "الاشتراكات",
+                    icon: Tags,
                     roleIDs: [1,3,9, 10],
                 },
 
@@ -158,6 +186,7 @@ const NavBar = () => {
                     href: "/offerSubscriptionReport",
                     labelEn: "Patient Offers",
                     labelAr: "عروض مريض",
+                    icon: ClipboardList,
                     roleIDs: [1,9, 10],
                 },
 
@@ -173,6 +202,7 @@ const NavBar = () => {
             name: "store",
             labelEn: "Store",
             labelAr: "المخزن",
+            icon: Package,
             roleIDs: [1,2,3,9, 10],
 
             children: [
@@ -180,6 +210,7 @@ const NavBar = () => {
                     href: "/store",
                     labelEn: "Store",
                     labelAr: "المخزون",
+                    icon: Package,
                     roleIDs: [1,3,9, 10],
                 },
 
@@ -187,6 +218,7 @@ const NavBar = () => {
                     href: "/supplies",
                     labelEn: "Supplies",
                     labelAr: "المستلزمات",
+                    icon: ClipboardList,
                     roleIDs: [1,3,9, 10],
                 },
 
@@ -194,6 +226,7 @@ const NavBar = () => {
                     href: "/supplyUnits",
                     labelEn: "Supply Units",
                     labelAr: "وحدات المستلزمات",
+                    icon: Wrench,
                     roleIDs: [1,3,9, 10],
                 },
 
@@ -210,6 +243,7 @@ const NavBar = () => {
             href: "/moneySafe",
             labelEn: "Money Safe",
             labelAr: "الخزنة المالية",
+            icon: Wallet,
             roleIDs: [1,3,9, 10],
         },
 
@@ -222,6 +256,7 @@ const NavBar = () => {
             name: "queries",
             labelEn: "Queries",
             labelAr: "الاستعلامات",
+            icon: BarChart3,
             roleIDs: [1,2,3,9, 10],
 
             children: [
@@ -229,6 +264,7 @@ const NavBar = () => {
                     href: "/revenue",
                     labelEn: "Revenue for Period",
                     labelAr: "إيرادات عن فترة",
+                    icon: BarChart3,
                     roleIDs: [1,9, 10],
                 },
 
@@ -236,6 +272,7 @@ const NavBar = () => {
                     href: "/doctorRevenue",
                     labelEn: "Doctor Revenue",
                     labelAr: "إيرادات الطبيب",
+                    icon: Percent,
                     roleIDs: [1,9, 10],
                 },
 
@@ -252,6 +289,7 @@ const NavBar = () => {
             name: "settings",
             labelEn: "Settings",
             labelAr: "الاعدادات",
+            icon: Settings,
             roleIDs: [1],
 
             children: [
@@ -260,6 +298,7 @@ const NavBar = () => {
                     href: "/roles",
                     labelEn: "Roles",
                     labelAr: "الوظائف",
+                    icon: BriefcaseBusiness,
                     roleIDs: [1],
                 },
 
@@ -267,6 +306,7 @@ const NavBar = () => {
                     href: "/users",
                     labelEn: "Users",
                     labelAr: "المستخدمين",
+                    icon: UserCog,
                     roleIDs: [1],
                 },
 
@@ -274,6 +314,7 @@ const NavBar = () => {
                     href: "/offers",
                     labelEn: "Offers",
                     labelAr: "العروض",
+                    icon: Gift,
                     roleIDs: [1, 10],
                 },
 
@@ -281,13 +322,15 @@ const NavBar = () => {
                     href: "/services",
                     labelEn: "Services",
                     labelAr: "الخدمات",
+                    icon: Stethoscope,
                     roleIDs: [1, 10],
                 },
 
                 {
                     href: "/doctorRevenuePercentages",
                     labelEn: "Doctor Revenue Percentages",
-                    labelAr: "نسب إيرادات الطبيب",
+                    labelAr: "نسب إيرادات طبيب",
+                    icon: Percent,
                     roleIDs: [1, 10],
                 },
 
@@ -295,6 +338,7 @@ const NavBar = () => {
                     href: "/devices",
                     labelEn: "Devices",
                     labelAr: "الأجهزة",
+                    icon: Monitor,
                     roleIDs: [1, 10],
                 },
 
@@ -302,6 +346,7 @@ const NavBar = () => {
                     href: "/treatmentAreas",
                     labelEn: "TreatmentAreas",
                     labelAr: "مناطق علاجية",
+                    icon: MapPinned,
                     roleIDs: [1, 10],
                 },
 
@@ -309,6 +354,7 @@ const NavBar = () => {
                     href: "/laserTypes",
                     labelEn: "LaserTypes",
                     labelAr: "نواع الليزر",
+                    icon: ScanLine,
                     roleIDs: [1, 10],
                 },
 
@@ -341,9 +387,10 @@ const NavBar = () => {
                         if (item.type === "link") {
                             return (
                                 <Link key={item.name} href={isAllowed ? item.href : "#"} 
-                                    className={`subcategory-link ${!isAllowed ? "disabled" : ""}`}>
-
-                                    {isRTL ? item.labelAr : item.labelEn}
+                                    className={`subcategory-link ${!isAllowed ? "disabled" : ""}`}
+                                >
+                                    {item.icon && <item.icon size={18} strokeWidth={2} />}
+                                    <span>{isRTL ? item.labelAr : item.labelEn}</span>
                                 </Link>
                             );
                         }
@@ -361,7 +408,10 @@ const NavBar = () => {
                                     <button type="button" className="subcategory-link"
                                         onClick={() => toggleMenu(item.name)}
                                     >
-                                        <span>{isRTL ? item.labelAr : item.labelEn }</span>
+                                        <span className="menu-label">
+                                            {item.icon && <item.icon size={18} strokeWidth={2} />}
+                                            <span>{isRTL ? item.labelAr : item.labelEn }</span>
+                                        </span>
                                         <span className="menu-arrow">{isOpen ? "▲"  : "▼" }</span>
 
                                     </button>
@@ -373,16 +423,14 @@ const NavBar = () => {
 
                                             {item.children.map((child) => {
                                                 
-                                                const isAllowed = 
-                                                    child.roleIDs.includes(Number(userInfo?.RoleID));
+                                                const isAllowed = child.roleIDs.includes(Number(userInfo?.RoleID));
 
                                                 return (
-                                                    <Link  key={child.href}  
-                                                        href={isAllowed ? child.href : "#"}
-                                                        className={`subcategory-link 
-                                                                ${!isAllowed ? "disabled" : ""}`} 
+                                                    <Link  key={child.href}  href={isAllowed ? child.href : "#"}
+                                                        className={`subcategory-link ${!isAllowed ? "disabled" : ""}`} 
                                                     >
-                                                        {isRTL ? child.labelAr  : child.labelEn}
+                                                        {child.icon && <child.icon size={17} strokeWidth={2} />}
+                                                        <span>{isRTL ? child.labelAr : child.labelEn}</span>
                                                     </Link>
                                                 )}
                                             )}
