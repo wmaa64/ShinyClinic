@@ -389,7 +389,7 @@ const NavBar = () => {
                                 <Link key={item.name} href={isAllowed ? item.href : "#"} 
                                     className={`subcategory-link ${!isAllowed ? "disabled" : ""}`}
                                 >
-                                    {item.icon && <item.icon size={18} strokeWidth={2} />}
+                                    {item.icon && <item.icon size={18} strokeWidth={2} className="linkicon" />}
                                     <span>{isRTL ? item.labelAr : item.labelEn}</span>
                                 </Link>
                             );
@@ -409,7 +409,7 @@ const NavBar = () => {
                                         onClick={() => toggleMenu(item.name)}
                                     >
                                         <span className="menu-label">
-                                            {item.icon && <item.icon size={18} strokeWidth={2} />}
+                                            {item.icon && <item.icon size={18} strokeWidth={2} className="linkicon" />}
                                             <span>{isRTL ? item.labelAr : item.labelEn }</span>
                                         </span>
                                         <span className="menu-arrow">{isOpen ? "▲"  : "▼" }</span>
@@ -429,7 +429,8 @@ const NavBar = () => {
                                                     <Link  key={child.href}  href={isAllowed ? child.href : "#"}
                                                         className={`subcategory-link ${!isAllowed ? "disabled" : ""}`} 
                                                     >
-                                                        {child.icon && <child.icon size={17} strokeWidth={2} />}
+                                                        {child.icon && <child.icon size={17} strokeWidth={2} 
+                                                            className="linkicon" />}
                                                         <span>{isRTL ? child.labelAr : child.labelEn}</span>
                                                     </Link>
                                                 )}

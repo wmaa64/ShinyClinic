@@ -387,6 +387,15 @@ a {
     cursor: not-allowed;
 }
 
+.subcategory-link .linkicon {
+    color: #555;
+}
+
+
+.subcategory-link .linkicon {
+    color: rgb(253, 121, 173);
+}
+
 .menu-label {
     display: flex;
     align-items: center;
@@ -2526,6 +2535,10 @@ table.additional-info > tbody > tr > th {
 .subcategory-link.disabled {
     opacity: 0.45;
     cursor: not-allowed;
+}
+
+.subcategory-link .linkicon {
+    color: rgb(253, 121, 173);
 }
 
 .menu-label {
