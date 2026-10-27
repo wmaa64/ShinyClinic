@@ -692,7 +692,7 @@ const StorePage = () => {
             <button
               type="submit"
               className="store-button primary"
-              disabled={savingPurchase || supplies.length === 0}
+              disabled={savingPurchase || supplies.length === 0 || userInfo?.RoleID == 11}
             >
               {savingPurchase ? text.saving : text.savePurchase}
             </button>
@@ -780,7 +780,7 @@ const StorePage = () => {
             <button
               type="submit"
               className="store-button primary"
-              disabled={savingAdjustment || supplies.length === 0}
+              disabled={savingAdjustment || supplies.length === 0 || userInfo?.RoleID !== 11}
             >
               {savingAdjustment ? text.saving : text.saveAdjustment}
             </button>

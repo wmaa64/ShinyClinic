@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useStateContext } from "../../../context/StateContext";
 
 // INITIAL FORMS
 const emptyForm = {
@@ -28,6 +29,8 @@ const  Patients = ()=> {
     const {i18n} = useTranslation();
     
     const isRTL = i18n.language === "ar"; // true if Arabic
+
+    const { userInfo } = useStateContext();
 
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -361,6 +364,7 @@ const  Patients = ()=> {
                 type="button"
                 className="subject-add-button"
                 onClick={handleAddPatient}
+                disabled={userInfo?.RoleID === 11}
             >
                 <span className="subject-add-icon">+</span>
 

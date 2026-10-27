@@ -106,13 +106,13 @@
 .dashboard-logout {
     padding: 9px 18px;
 
-    border: 1px solid #dc2626;
+    border: 1px solid rgb(253, 121, 173);
 
     border-radius: 6px;
 
     background: white;
 
-    color: #dc2626;
+    color: blue;
 
     font-size: 14px;
 
@@ -121,7 +121,9 @@
 
 
 .dashboard-logout:hover {
-    background: #dc2626;
+
+    background: rgb(253, 121, 173);
+    /*background: #dc2626;*/
 
     color: white;
 }

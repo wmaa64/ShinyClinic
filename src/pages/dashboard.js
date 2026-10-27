@@ -279,7 +279,9 @@ const Dashboard = () => {
                     </button>
 
 
-                    <button  onClick={() =>router.push("/patients")}  className="quick-action">
+                    <button  onClick={() =>router.push("/patients")}  className="quick-action"
+                        disabled={userInfo?.RoleID === 11}
+                    >
                         <span className="quick-action-icon">➕</span>
                         <span>{isRTL ? "إضافة مريض" : "Add Patient"}</span>
                     </button>

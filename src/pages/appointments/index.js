@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useStateContext } from "../../../context/StateContext";
 
 // INITIAL FORM // =====================================================
 const emptyForm = {
@@ -23,6 +24,7 @@ const Appointments = () => {
   
   const { i18n } = useTranslation();
   const isRTL = i18n.language === "ar" ;
+  const { userInfo } = useStateContext();
 
   const [appointments, setAppointments] = useState([]);
   const [patients, setPatients] = useState([]);
@@ -703,6 +705,7 @@ const handleEditAppointment = async (appointment) => {
 
         <button type="button"  className="appointments-add-button"
           onClick={() => handleAddAppointment() }
+          disabled={userInfo?.RoleID === 11}
         >
           <span className="appointments-add-icon">+</span>
           {isRTL ? "إضافة موعد" : "Add Appointment"}
@@ -817,6 +820,7 @@ const handleEditAppointment = async (appointment) => {
                             event.stopPropagation();
                             handleAddAppointment(getDateString(currentYear, currentMonth, day.date));
                           }}
+                          disabled={userInfo?.RoleID === 11}
                         >
                           +
                         </button>

@@ -97,7 +97,7 @@ const NavBar = () => {
             labelEn: "DashBoard",
             labelAr: "لوحة المعلومات",
             icon: LayoutDashboard,
-            roleIDs: [1,2,3,9, 10],
+            roleIDs: [1,2,3,9, 10, 11],
         },
 
 
@@ -112,7 +112,7 @@ const NavBar = () => {
             labelEn: "Patients",
             labelAr: "المرضى",
             icon: Users,
-            roleIDs: [1,2,3, 10],
+            roleIDs: [1,2,3, 10, 11],
         },
 
         // -------------------------------------------------
@@ -126,7 +126,7 @@ const NavBar = () => {
             labelEn: "Appointments",
             labelAr: "الحجوزات",
             icon: CalendarDays,
-            roleIDs: [1,3, 10],
+            roleIDs: [1,3, 10, 11],
         },
 
         // -------------------------------------------------
@@ -139,7 +139,7 @@ const NavBar = () => {
             labelEn: "Sessions",
             labelAr: "الجلسات",
             icon: Stethoscope,
-            roleIDs: [1,3, 10],
+            roleIDs: [1,3, 10, 11],
 
             children: [
                 {
@@ -147,7 +147,7 @@ const NavBar = () => {
                     labelEn: "Sessions Registration",
                     labelAr: "تسجيل الجلسات",
                     icon: ClipboardList,
-                    roleIDs: [1,3, 10],
+                    roleIDs: [1,3, 10, 11],
                 },
 
                 {
@@ -155,7 +155,7 @@ const NavBar = () => {
                     labelEn: "Sessions Payments",
                     labelAr: " مدفوعات الجلسات",
                     icon: CreditCard,
-                    roleIDs: [1,3, 10],
+                    roleIDs: [1,3, 10, 11],
                 },
 
             ]
@@ -171,7 +171,7 @@ const NavBar = () => {
             labelEn: "Offers",
             labelAr: "العروض",
             icon: Gift,
-            roleIDs: [1,3,9, 10],
+            roleIDs: [1,3,9, 10, 11],
 
             children: [
                 {
@@ -179,7 +179,7 @@ const NavBar = () => {
                     labelEn: "Subscriptions",
                     labelAr: "الاشتراكات",
                     icon: Tags,
-                    roleIDs: [1,3,9, 10],
+                    roleIDs: [1,3,9, 10, 11],
                 },
 
                 {
@@ -187,7 +187,7 @@ const NavBar = () => {
                     labelEn: "Patient Offers",
                     labelAr: "عروض مريض",
                     icon: ClipboardList,
-                    roleIDs: [1,9, 10],
+                    roleIDs: [1,9, 10, 11],
                 },
 
             ]
@@ -203,7 +203,7 @@ const NavBar = () => {
             labelEn: "Store",
             labelAr: "المخزن",
             icon: Package,
-            roleIDs: [1,2,3,9, 10],
+            roleIDs: [1,2,3,9, 10, 11],
 
             children: [
                 {
@@ -211,7 +211,7 @@ const NavBar = () => {
                     labelEn: "Store",
                     labelAr: "المخزون",
                     icon: Package,
-                    roleIDs: [1,3,9, 10],
+                    roleIDs: [1,3,9, 10, 11],
                 },
 
                 {
@@ -244,7 +244,7 @@ const NavBar = () => {
             labelEn: "Money Safe",
             labelAr: "الخزنة المالية",
             icon: Wallet,
-            roleIDs: [1,3,9, 10],
+            roleIDs: [11],
         },
 
         // -------------------------------------------------
@@ -257,7 +257,7 @@ const NavBar = () => {
             labelEn: "Queries",
             labelAr: "الاستعلامات",
             icon: BarChart3,
-            roleIDs: [1,2,3,9, 10],
+            roleIDs: [1,2,3,9, 10, 11],
 
             children: [
                 {
@@ -265,7 +265,7 @@ const NavBar = () => {
                     labelEn: "Revenue for Period",
                     labelAr: "إيرادات عن فترة",
                     icon: BarChart3,
-                    roleIDs: [1,9, 10],
+                    roleIDs: [1,9, 10, 11],
                 },
 
                 {
@@ -273,7 +273,7 @@ const NavBar = () => {
                     labelEn: "Doctor Revenue",
                     labelAr: "إيرادات الطبيب",
                     icon: Percent,
-                    roleIDs: [1,9, 10],
+                    roleIDs: [1,9, 10, 11],
                 },
 
             ]
