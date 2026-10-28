@@ -659,6 +659,7 @@ const MoneySafePage = () => {
             type="button"
             className="money-safe-btn money-safe-btn-secondary"
             onClick={handleOpeningBalance}
+            disabled={userInfo?.RoleID !== 11}
           >
             {t("Opening Balance", "الرصيد الافتتاحي")}
           </button>
@@ -667,6 +668,7 @@ const MoneySafePage = () => {
             type="button"
             className="money-safe-btn money-safe-btn-primary"
             onClick={handleMoneyIn}
+            disabled={userInfo?.RoleID !== 11}
           >
             + {t("Money In", "إضافة أموال")}
           </button>
@@ -675,6 +677,7 @@ const MoneySafePage = () => {
             type="button"
             className="money-safe-btn money-safe-btn-danger"
             onClick={handleMoneyOut}
+            disabled={userInfo?.RoleID !== 11}
           >
             − {t("Money Out", "صرف أموال")}
           </button>

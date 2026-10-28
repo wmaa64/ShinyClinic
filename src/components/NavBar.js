@@ -179,7 +179,7 @@ const NavBar = () => {
                     labelEn: "Subscriptions",
                     labelAr: "الاشتراكات",
                     icon: Tags,
-                    roleIDs: [1,3,9, 10, 11],
+                    roleIDs: [1,3, 9, 10, 11],
                 },
 
                 {
@@ -187,7 +187,7 @@ const NavBar = () => {
                     labelEn: "Patient Offers",
                     labelAr: "عروض مريض",
                     icon: ClipboardList,
-                    roleIDs: [1,9, 10, 11],
+                    roleIDs: [1,3, 9, 10, 11],
                 },
 
             ]
@@ -234,7 +234,7 @@ const NavBar = () => {
         },
 
         // -------------------------------------------------
-        // APPOINTMENTS
+        // MoneySafe
         // -------------------------------------------------
 
         {
@@ -244,7 +244,7 @@ const NavBar = () => {
             labelEn: "Money Safe",
             labelAr: "الخزنة المالية",
             icon: Wallet,
-            roleIDs: [11],
+            roleIDs: [3, 11],
         },
 
         // -------------------------------------------------
