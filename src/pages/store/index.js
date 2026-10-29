@@ -11,10 +11,19 @@ const MOVEMENT_TYPES = [
   "RETURN_IN",
 ];
 
+const PAYMENT_METHODS = [
+  "Cash",
+  "Visa",
+  "Bank Transfer",
+  "Instapay",
+  "Vodafone Cash",
+];
+
 const EMPTY_PURCHASE = {
   SupplyID: "",
   Qty: "",
   UnitCost: "",
+  PaymentMethod: "Cash",
   Notes: "",
 };
 
@@ -111,6 +120,8 @@ const StorePage = () => {
             selectSupply: "اختر المستلزم",
             qty: "الكمية",
             unitCost: "تكلفة الوحدة",
+            paymentMethod: "طريقة الدفع",
+            selectPaymentMethod: "اختر طريقة الدفع",
             totalCost: "إجمالي تكلفة الشراء",
             notes: "ملاحظات",
             notesPurchase: "ملاحظات اختيارية عن الشراء",
@@ -167,6 +178,8 @@ const StorePage = () => {
             selectSupply: "Select a supply",
             qty: "Quantity",
             unitCost: "Unit Cost",
+            paymentMethod: "Payment Method",
+            selectPaymentMethod: "Select a payment method",
             totalCost: "Total Purchase Cost",
             notes: "Notes",
             notesPurchase: "Optional purchase notes",
@@ -367,6 +380,7 @@ const StorePage = () => {
           SupplyID: supplyID,
           Qty: qty,
           UnitCost: unitCost,
+          PaymentMethod: purchaseForm.PaymentMethod,
           UserID: userInfo?.UserID ?? null,
           Notes: purchaseForm.Notes.trim() || null,
         }),
@@ -638,8 +652,8 @@ const StorePage = () => {
                 <input
                   id="purchase-qty"
                   type="number"
-                  min="0.001"
-                  step="0.001"
+                  min="1"
+                  step="1"
                   value={purchaseForm.Qty}
                   onChange={(event) =>
                     setPurchaseField("Qty", event.target.value)
@@ -657,7 +671,7 @@ const StorePage = () => {
                   id="purchase-unit-cost"
                   type="number"
                   min="0"
-                  step="0.01"
+                  step="1"
                   value={purchaseForm.UnitCost}
                   onChange={(event) =>
                     setPurchaseField("UnitCost", event.target.value)
@@ -671,6 +685,28 @@ const StorePage = () => {
             <div className="store-purchase-total">
               <span>{text.totalCost}</span>
               <strong>{money(purchaseTotal)} EGP</strong>
+            </div>
+
+            <div className="store-field">
+              <label htmlFor="purchase-payment-method">
+                {text.paymentMethod} *
+              </label>
+              <select
+                id="purchase-payment-method"
+                value={purchaseForm.PaymentMethod}
+                onChange={(event) =>
+                  setPurchaseField("PaymentMethod", event.target.value)
+                }
+                required
+                disabled={savingPurchase}
+              >
+                <option value="">{text.selectPaymentMethod}</option>
+                {PAYMENT_METHODS.map((method) => (
+                  <option key={method} value={method}>
+                    {method}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="store-field">
@@ -746,7 +782,7 @@ const StorePage = () => {
                 id="actual-quantity"
                 type="number"
                 min="0"
-                step="0.001"
+                step="1"
                 value={adjustmentForm.ActualQuantity}
                 onChange={(event) =>
                   setAdjustmentField("ActualQuantity", event.target.value)

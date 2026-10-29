@@ -13,6 +13,7 @@ export default async function handler(req, res) {
       SupplyID,
       Qty,
       UnitCost,
+      PaymentMethod,
       Notes,
     } = req.body;
 
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
       SupplyID,
       Qty,
       UnitCost,
+      PaymentMethod,
       UserID: req.body.UserID ?? null,
       Notes,
     });

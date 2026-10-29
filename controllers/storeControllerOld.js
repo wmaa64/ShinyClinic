@@ -7,7 +7,7 @@ import connectDB, { sql } from "../lib/db";
   UnitCost: purchase cost per unit
   UserID: userInfo.UserID from the application context
 */
-export const recordStorePurchase = async ({  SupplyID,  Qty,  UnitCost,  UserID = null,  Notes = null,}) => {
+const recordStorePurchase = async ({  SupplyID,  Qty,  UnitCost,  UserID = null,  Notes = null,}) => {
 
   const supplyID = Number(SupplyID);
   const qty = Number(Qty);
@@ -152,7 +152,7 @@ export const recordStorePurchase = async ({  SupplyID,  Qty,  UnitCost,  UserID 
   ActualQuantity is the quantity physically counted in the store.
   The controller calculates the difference automatically.
 */
-export const adjustStoreStock = async ({
+const adjustStoreStock = async ({
   SupplyID,
   ActualQuantity,
   UserID = null,
@@ -320,7 +320,7 @@ export const adjustStoreStock = async ({
   Optional filters:
   SupplyID, FromDate, ToDate, MovementType
 */
-export const getStoreMovements = async ({
+const getStoreMovements = async ({
   SupplyID = null,
   FromDate = null,
   ToDate = null,
@@ -411,3 +411,5 @@ export const getStoreMovements = async ({
 
   return result.recordset;
 };
+
+export { recordStorePurchase, adjustStoreStock, getStoreMovements };
