@@ -1,4 +1,4 @@
-import { getStoreMovements } from "../../../../controllers/storeControllerOld";
+import { getStoreMovements } from "../../../../controllers/storeController";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {

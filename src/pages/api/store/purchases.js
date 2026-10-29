@@ -1,4 +1,4 @@
-import { recordStorePurchase } from "../../../../controllers/storeControllerOld";
+import { recordStorePurchase } from "../../../../controllers/storeController";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {

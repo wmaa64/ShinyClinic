@@ -1,7 +1,7 @@
 import {
   createOfferSubscription,
   getPatientOfferSubscriptions,
-} from "../../../../controllers/offerSubscriptionControllerOls";
+} from "../../../../controllers/offerSubscriptionControllerOld";
 
 
 // =====================================================

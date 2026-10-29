@@ -3,7 +3,7 @@ import {
   getOfferSubscriptionPayments,
   updateOfferSubscriptionPayment,
   deleteOfferSubscriptionPayment,
-} from "../../../../../controllers/offerSubscriptionControllerOls";
+} from "../../../../../controllers/offerSubscriptionController";
 
 const getErrorStatus = (error) => {
   const message = error.message || "";
@@ -37,8 +37,11 @@ export default async function handler(req, res) {
         return res.status(400).json({ message: "AmountPaid is required" });
       }
       if (!PaymentMethod) return res.status(400).json({ message: "PaymentMethod is required" });
+
       const result = await addOfferSubscriptionPayment(parsedID, { AmountPaid, PaymentMethod, UserID, PaymentDate, Notes });
+
       return res.status(201).json(result);
+
     } catch (error) {
       console.error("POST offer subscription payment error:", error);
       return res.status(getErrorStatus(error)).json({ message: error.message || "Failed to add offer subscription payment" });

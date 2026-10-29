@@ -1,4 +1,4 @@
-import { adjustStoreStock } from "../../../../controllers/storeControllerOld";
+import { adjustStoreStock } from "../../../../controllers/storeController";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {

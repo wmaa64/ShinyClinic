@@ -2,7 +2,7 @@ import {
   getOfferSubscriptionById,
   updateOfferSubscription,
   deleteOfferSubscription,
-} from "../../../../../controllers/offerSubscriptionControllerOls";
+} from "../../../../../controllers/offerSubscriptionControllerOld";
 
 const getErrorStatus = (error) => {
   const message = error.message || "";

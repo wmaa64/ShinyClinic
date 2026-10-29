@@ -328,7 +328,9 @@ const OfferSubscriptionsPage = () => {
   // Validate and record a partial payment against the selected subscription balance.
   const handleRegisterPayment = async (event) => {
     event.preventDefault();
+    
     if (!activeSubscription) return;
+
     const amount = Number(paymentForm.AmountPaid);
     const alreadyPaid = activeSubscription.TotalPaid === undefined
       ? payments.reduce((total, payment) => total + Number(payment.AmountPaid || 0), 0)
@@ -765,7 +767,7 @@ const OfferSubscriptionsPage = () => {
                             </label>
 
                             <input id={`edit-payment-amount-${payment.OfferSubscriptionPaymentID}`} type="number" 
-                              min="0.01" step="0.01" value={editPaymentForm.AmountPaid} 
+                              min="1" step="1" value={editPaymentForm.AmountPaid} 
                               onChange=
                               {(event) => setEditPaymentForm((current) => ({ ...current, AmountPaid: event.target.value }))} 
                               required 
@@ -866,28 +868,50 @@ const OfferSubscriptionsPage = () => {
             {/* Only request another payment when the subscription still has a balance. */}
             {activeRemaining > 0 && (
               <form className="offer-subscriptions-payment-form" onSubmit={handleRegisterPayment}>
+                
                 <div className="offer-subscriptions-field">
+                  
                   <label htmlFor="payment-amount">{isRTL ? "المبلغ *" : "Amount *"}</label>
-                  <input id="payment-amount" type="number" name="AmountPaid" min="0.01" max={activeRemaining} step="0.01" value={paymentForm.AmountPaid} onChange={handlePaymentChange} required />
+                  
+                  <input id="payment-amount" type="number" name="AmountPaid" 
+                    min="1" max={activeRemaining} step="1" value={paymentForm.AmountPaid} 
+                    onChange={handlePaymentChange} required />
+                
                 </div>
+                
                 <div className="offer-subscriptions-field">
+                  
                   <label htmlFor="payment-method">{isRTL ? "طريقة الدفع *" : "Payment Method *"}</label>
-                  <select id="payment-method" name="PaymentMethod" value={paymentForm.PaymentMethod} onChange={handlePaymentChange} required>
+                  
+                  <select id="payment-method" name="PaymentMethod" value={paymentForm.PaymentMethod} 
+                    onChange={handlePaymentChange} required
+                  >
                     {PAYMENT_METHODS.map((method) => <option key={method} value={method}>{method}</option>)}
                   </select>
+
                 </div>
+                
                 <div className="offer-subscriptions-field offer-subscriptions-field-wide">
+                  
                   <label htmlFor="payment-notes">{isRTL ? "ملاحظات" : "Notes"}</label>
-                  <textarea id="payment-notes" name="Notes" value={paymentForm.Notes} onChange={handlePaymentChange} rows={2} maxLength={500} />
+                  
+                  <textarea id="payment-notes" name="Notes" value={paymentForm.Notes} 
+                    onChange={handlePaymentChange} rows={2} maxLength={500} />
+                
                 </div>
+                
                 <footer className="offer-subscriptions-actions offer-subscriptions-field-wide">
+                  
                   <button type="submit" disabled={savingPayment || loadingPayments}>
-                    {savingPayment ? (isRTL ? "جارٍ التسجيل..." : "Recording...") : (isRTL ? "حفظ الدفعة" : "Save Payment")}
+                    {savingPayment ?  (isRTL ? "جارٍ التسجيل..." : "Recording...") : 
+                                      (isRTL ? "حفظ الدفعة" : "Save Payment")}
                   </button>
+
                 </footer>
               </form>
             )}
           </section>
+          
         </div>
       )}
     </main>

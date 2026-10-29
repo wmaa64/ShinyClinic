@@ -1,7 +1,7 @@
 import {
   deleteOfferSubscriptionUsage,
   updateOfferSubscriptionUsage,
-} from "../../../../controllers/offerSubscriptionControllerOls";
+} from "../../../../controllers/offerSubscriptionControllerOld";
 
 const getErrorStatus = (error) => {
   const message = error.message || "";
